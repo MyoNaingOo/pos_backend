@@ -73,28 +73,30 @@ public class UserController {
         return userService.mapper(user);
     }
 
-    @PostMapping("image")
+    @PostMapping("change/image")
     public void changeImage(@RequestBody UserDto user, HttpServletRequest request) {
-        User userjwt = jwtService.getuser(request);
-        userService.changeImage(userjwt.getId(), user.getUser_img());
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        userService.changeImage(userInfo.getId(), user.getUser_img());
     }
 
-    @PostMapping("changePass")
+    @PostMapping("change/password")
     public void changePass(@RequestBody UserDto user, HttpServletRequest request) {
         User userjwt = jwtService.getuser(request);
         userService.changePass(userjwt.getId(), user.getPassword());
     }
 
-    @PostMapping("changeName")
+    @PostMapping("change/name")
     public void changeName(@RequestBody UserDto user, HttpServletRequest request) {
         User userjwt = jwtService.getuser(request);
         userService.changeName(userjwt.getId(), user.getName());
     }
 
-    @PostMapping("changeAddress")
-    public void changeAddress(@RequestBody UserDto user, HttpServletRequest request) {
-        User userjwt = jwtService.getuser(request);
-        userService.changeAddress(userjwt.getId(), user.getAddress());
+    @PostMapping("change/shop")
+    public void changeShop(@RequestBody UserDto userDto, HttpServletRequest request) {
+
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        userService.updateShop(userInfo.getId(),userDto.getShop().getId());
+
     }
 
 }

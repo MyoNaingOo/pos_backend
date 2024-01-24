@@ -1,6 +1,7 @@
 package com.mno.business.user.dto;
 
 
+import com.mno.business.shop.Shop;
 import com.mno.business.user.entity.Role;
 import com.mno.business.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class UserDto {
     private Boolean nameNotAvailable;
     private Boolean gmailNotAvailable;
 
+    private Shop shop;
 
 
 }

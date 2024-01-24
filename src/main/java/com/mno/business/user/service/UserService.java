@@ -152,13 +152,9 @@ public class UserService {
 
     }
 
-    public User updateUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
-    }
 
-    public void changeImage(Long id, String image) {
-//        userRepo.updateImage(id, image);
+    public void changeImage(Long userInfo_id, String image) {
+        userInfoRepo.updateUserImg(userInfo_id,image);
     }
 
     public void changePass(Long id, String password) {
@@ -170,8 +166,10 @@ public class UserService {
         userRepo.changeName(id, name);
     }
 
-    public void changeAddress(Long id, String address) {
-        userRepo.changeAddress(id, address);
+
+    public void updateShop(Long user_infoId,Long shop_id){
+        userInfoRepo.updateShop(user_infoId,shop_id);
     }
+
 
 }
