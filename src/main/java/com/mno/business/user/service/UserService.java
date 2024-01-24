@@ -63,7 +63,7 @@ public class UserService {
     }
 
     public List<UserDto> ListMapper(List<User> users) {
-        List<UserDto> userDtos = new ArrayList<UserDto>();
+        List<UserDto> userDtos = new ArrayList<>();
         users.forEach(
                 user -> {
                     UserDto userDto = mapper(user);
