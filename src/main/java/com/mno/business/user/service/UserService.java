@@ -4,6 +4,7 @@ import com.mno.business.Store.Repo.StoreRepo;
 import com.mno.business.image.ImageService;
 import com.mno.business.product.Repo.ProductRepo;
 import com.mno.business.sale.Repo.SaleRepo;
+import com.mno.business.shop.Shop;
 import com.mno.business.user.dto.UserDto;
 import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
@@ -72,6 +73,27 @@ public class UserService {
         return userDtos;
     }
 
+    public UserInfo userInfoMapper(UserInfo userInfo){
+        User user = responeUser(userInfo.getUser());
+        return UserInfo.builder()
+                .shop(userInfo.getShop())
+                .user(user)
+                .user_img(userInfo.getUser_img())
+                .build();
+    }
+
+    public List<UserInfo> userInfosMapper(List<UserInfo> userInfos){
+        List<UserInfo> userInfoList = new ArrayList<>();
+
+        userInfos.forEach(
+                userInfo -> {
+                    UserInfo userInfo1 = userInfoMapper(userInfo);
+                    userInfoList.add(userInfo1);
+                }
+        );
+
+        return userInfoList;
+    }
 
 
 
@@ -100,6 +122,15 @@ public class UserService {
     public UserInfo getuserInfo(Long user_id){
         return userInfoRepo.findByUserId(user_id).orElse(null);
     }
+
+
+    public List<UserInfo> getusersInfoByShop(int num,Shop shop){
+        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+        return userInfoRepo.findAllByShop(shop,pageable);
+
+    }
+
+
 
     @Async
     public void deleteUser(Long id) {

@@ -4,6 +4,7 @@ import com.mno.business.config.JwtService;
 import com.mno.business.user.auth.AuthenticationService;
 import com.mno.business.user.dto.UserDto;
 import com.mno.business.user.entity.User;
+import com.mno.business.user.entity.UserInfo;
 import com.mno.business.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,19 +33,26 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @GetMapping("users/page/{num}")
+    @GetMapping("page/{num}")
     public List<UserDto> getusers(@PathVariable("num") int num) {
         List<User> users = userService.getUsers(num);
         return userService.ListMapper(users);
     }
 
     @GetMapping("userid/{id}")
-    public UserDto getUser(@PathVariable("id") Long id) {
-        User user = userService.getUser(id).orElse(null);
-        assert user != null;
-        return userService.mapper(user);
+    public UserInfo getUser(@PathVariable("id") Long id) {
+        UserInfo userInfo = userService.getuserInfo(id);
+        return userService.userInfoMapper(userInfo);
 
     }
+
+    @GetMapping("shop/page/{num}")
+    public List<UserInfo> getUsernameOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        List<UserInfo> userInfos = userService.getusersInfoByShop(num,userInfo.getShop());
+        return userService.userInfosMapper(userInfos);
+    }
+
 
     @GetMapping("username/{name}")
     public UserDto getUsername(@PathVariable("name") String name) {
