@@ -143,12 +143,12 @@ public class UserService {
         storeRepo.removeUserByUser(user.getId());
         otpRepo.deleteAllByGmail(user.getGmail());
         tokenRepo.deleteAllByUser(user.getId());
-        userRepo.deleteById(id);
         UserInfo userInfo = getuserInfo(user.getId());
         if (userInfo!= null){
             imageService.deleteByName(userInfo.getUser_img());
             userInfoRepo.deleteById(userInfo.getId());
         }
+        userRepo.deleteById(id);
 
     }
 
