@@ -7,6 +7,7 @@ import com.mno.business.sale.entity.Sale;
 import com.mno.business.sale.entity.SalePro;
 import com.mno.business.sale.service.SaleSer;
 import com.mno.business.user.entity.User;
+import com.mno.business.user.entity.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class SaleControl {
 
     @PostMapping("add")
     public void addSale(@RequestBody SaleDto saleDto, HttpServletRequest request) {
-        User user = jwtService.getuser(request);
+        UserInfo userInfo = jwtService.getUserInfo(request);
         List<SalePro> salePros = new ArrayList<>();
 
         saleDto.getSaleProList().forEach(
@@ -42,21 +43,21 @@ public class SaleControl {
                 }
         );
         Sale sale = Sale.builder()
-                .user(user)
+                .user(userInfo.getUser())
                 .salePros(salePros)
+                .shop(userInfo.getShop())
                 .time(LocalDateTime.now())
                 .build();
         saleSer.add(sale);
 
     }
 
-    @GetMapping("sales")
-    private List<SaleDto> saleList() {
-        return saleSer.resSaleDtos(saleSer.sales());
-    }
 
     @GetMapping("findByMonth/{num}")
-    private List<SaleDto> findByMonth(@RequestParam("month") int month, @RequestParam("year") int year, @PathVariable("num") int num) {
+    private List<SaleDto> findByMonth(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year,
+            @PathVariable("num") int num) {
         return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num));
     }
 
@@ -69,6 +70,40 @@ public class SaleControl {
     private void delete(@PathVariable("id") Long id) {
         saleSer.delete(id);
     }
+
+
+    /*
+     *shop api start
+     *
+     * */
+
+    @GetMapping("shop/findByMonth/{num}")
+    private List<SaleDto> findByMonthOfShop(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year,
+            @PathVariable("num") int num,
+            HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num,userInfo.getShop()));
+    }
+
+    @GetMapping("shop/page/{num}")
+    private List<SaleDto> salesOfShop(@PathVariable("num") int num,
+                                      HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return saleSer.resSaleDtos(saleSer.salesOfShop(num,userInfo.getShop()));
+    }
+
+
+
+
+
+
+
+    /*
+     *shop api end
+     *
+     * */
 
 
 }

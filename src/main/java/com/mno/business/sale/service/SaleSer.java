@@ -10,7 +10,7 @@ import com.mno.business.sale.Repo.SaleRepo;
 import com.mno.business.sale.dto.SaleDto;
 import com.mno.business.sale.dto.SaleProDto;
 import com.mno.business.sale.entity.Sale;
-import com.mno.business.user.dto.UserDto;
+import com.mno.business.shop.Shop;
 import com.mno.business.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -81,7 +81,7 @@ public class SaleSer {
     public void add(Sale sale) {
         saleRepo.save(sale);
         sale.getSalePros().forEach(salePro -> {
-            storeSer.updateBulkForSale(salePro.getProduct_id(), salePro.getBulk(),sale.getShop());
+            storeSer.updateBulkForSale(salePro.getProduct_id(), salePro.getBulk(), sale.getShop());
         });
     }
 
@@ -89,6 +89,35 @@ public class SaleSer {
     public Sale getSale(Long id) {
         return saleRepo.findById(id).orElse(null);
     }
+
+
+
+    /*
+     *shop include start
+     *
+     * */
+
+
+
+    public List<Sale> salesOfShop(int page_num, Shop shop) {
+        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
+        return saleRepo.findAllByShop(shop,pageable);
+    }
+
+
+
+    public List<Sale> findByMonthOfShop(int month, int year, int page_num,Shop shop) {
+        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
+        return saleRepo.findByMonthOfShop(month, year,shop.getId(), pageable);
+    }
+
+
+
+    /*
+     *shop include end
+     *
+     * */
+
 
     public List<Sale> sales(int page_num) {
         Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
@@ -100,14 +129,11 @@ public class SaleSer {
         Sale sale = getSale(id);
         sale.getSalePros().forEach(
                 salePro -> {
-                    storeSer.deleteFormSale(salePro.getProduct_id(), salePro.getBulk(),sale.getShop());
+                    storeSer.deleteFormSale(salePro.getProduct_id(), salePro.getBulk(), sale.getShop());
                 });
         saleRepo.deleteById(id);
     }
 
-    public List<Sale> sales() {
-        return saleRepo.findAll(Sort.by("id").descending());
-    }
 
 
     public List<Sale> findByMonth(int month, int year, int page_num) {
