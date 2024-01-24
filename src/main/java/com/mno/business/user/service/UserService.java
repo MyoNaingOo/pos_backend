@@ -144,6 +144,12 @@ public class UserService {
         otpRepo.deleteAllByGmail(user.getGmail());
         tokenRepo.deleteAllByUser(user.getId());
         userRepo.deleteById(id);
+        UserInfo userInfo = getuserInfo(user.getId());
+        if (userInfo!= null){
+            imageService.deleteByName(userInfo.getUser_img());
+            userInfoRepo.deleteById(userInfo.getId());
+        }
+
     }
 
     public User updateUser(User user) {
