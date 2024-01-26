@@ -38,9 +38,9 @@ public class StoreControl {
 
 
     @GetMapping("shop/page/{num}")
-    private List<StoreDto> pageOfShop(@PathVariable("num") int id,HttpServletRequest request) {
+    private List<StoreDto> pageOfShop(@PathVariable("num") int num,HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.storeListOfShop(id,userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.storeListOfShop(num,userInfo.getShop()));
     }
 
     @GetMapping("shop/prosBalance/{num}")

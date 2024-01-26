@@ -2,14 +2,13 @@ package com.mno.business.product.service;
 
 
 import com.mno.business.Store.Repo.StoreRepo;
-import com.mno.business.Store.service.StoreSer;
 import com.mno.business.image.ImageService;
 import com.mno.business.product.Prices.ProPrice;
 import com.mno.business.product.Prices.ProPriceSer;
 import com.mno.business.product.Repo.ProductRepo;
 import com.mno.business.product.dto.ProductDto;
 import com.mno.business.product.entity.Product;
-import com.mno.business.user.dto.UserDto;
+import com.mno.business.shop.Shop;
 import com.mno.business.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -35,11 +34,27 @@ public class ProductSer {
 
     public ProductDto changeProDto(Product product) {
         int balance = storeRepo.getProBalance(product.getId()).orElse(0);
+        ProPrice price = proPriceSer.LtsProPrice(product.getId());
+        return ProductDto.builder()
+                .id(product.getId())
+                .img(product.getImg())
+                .code(product.getCode())
+                .name(product.getName())
+                .user(userService.responeUser(product.getUser()))
+                .description(product.getDescription())
+                .balance(balance)
+                .price(price)
+                .build();
+    }
+
+    public ProductDto changeProDtoOfShop(Product product,Shop shop) {
+        int balance = storeRepo.getProBalanceOfShop(product.getId(),shop.getId()).orElse(0);
 
         ProPrice price = proPriceSer.LtsProPrice(product.getId());
         return ProductDto.builder()
                 .id(product.getId())
                 .img(product.getImg())
+                .code(product.getCode())
                 .name(product.getName())
                 .user(userService.responeUser(product.getUser()))
                 .description(product.getDescription())
@@ -61,27 +76,53 @@ public class ProductSer {
         return productDtos;
     }
 
+    public List<ProductDto> changeListProDtoOfShop(List<Product> products,Shop shop) {
+        List<ProductDto> productDtos = new ArrayList<ProductDto>();
+        products.forEach(
+                product -> {
+                    productDtos.add(changeProDtoOfShop(product,shop));
+                }
+
+        );
+        return productDtos;
+    }
 
     public void save(Product product) {
         productRepo.save(product);
     }
 
 
-    public List<ProductDto> findAll(int num){
+    /*
+    * shop include start
+    *
+    * */
+
+
+
+    /*
+     * shop include end
+     *
+     * */
+
+
+
+
+
+    public List<Product> findAll(int num){
         Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        List<Product> products = productRepo.findAll(pageable).getContent();
-        return changeListProDto(products);
+        return productRepo.findAll(pageable).getContent();
     }
 
 
-    public List<ProductDto> productList() {
-        return changeListProDto(productRepo.findAll(Sort.by("id").descending()));
-
-    }
 
     public Product getProduct(Long id) {
         return productRepo.findById(id).orElse(null);
     }
+
+    public Product getProductByCode(Long code) {
+        return productRepo.findByCode(code).orElse(null);
+    }
+
 
     @Async
     public void deleteProduct(Long id) {
@@ -97,6 +138,11 @@ public class ProductSer {
         List<Product> products = productRepo.findByNameContaining(name, pageable);
 
         return changeListProDto(products);
+    }
+
+    public List<Product> findProduct(int num, String find){
+        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+        return productRepo.findByNameContainingAndDescriptionContaining(find,find,pageable);
     }
 
     public List<ProductDto> findByMonth(int month,int year,int num) {
