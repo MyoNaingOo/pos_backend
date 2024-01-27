@@ -16,7 +16,7 @@ public class ProPriceControl {
     private final ProductSer productSer;
 
     @PostMapping("add")
-    private void add(@RequestBody ProPriceDto proPriceDto){
+    private void add(@RequestBody ProPriceDto proPriceDto) {
         Product product = productSer.getProduct(proPriceDto.getProduct_id());
         ProPrice proPrice = ProPrice.builder()
                 .date(LocalDate.now())
@@ -29,7 +29,7 @@ public class ProPriceControl {
     }
 
     @DeleteMapping("delete/{id}")
-    private void delete(@PathVariable("id") Long id){
+    private void delete(@PathVariable("id") Long id) {
         proPriceSer.deleteById(id);
     }
 

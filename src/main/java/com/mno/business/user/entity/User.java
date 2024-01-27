@@ -30,9 +30,6 @@ public class  User implements UserDetails {
     @Column(unique = true,nullable = false)
     private String gmail;
 
-    @Lob
-    @Column(length = 500 )
-    private String address;
 
     @Enumerated(EnumType.STRING)
     private Role role;

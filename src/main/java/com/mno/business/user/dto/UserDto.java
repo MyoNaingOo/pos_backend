@@ -20,7 +20,6 @@ public class UserDto {
     private String user_img;
     private String password;
     private String gmail;
-    private String address;
     private Role role;
     private Boolean nameNotAvailable;
     private Boolean gmailNotAvailable;

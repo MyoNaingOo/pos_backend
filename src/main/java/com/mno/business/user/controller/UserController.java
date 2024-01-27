@@ -1,7 +1,6 @@
 package com.mno.business.user.controller;
 
 import com.mno.business.config.JwtService;
-import com.mno.business.user.auth.AuthenticationService;
 import com.mno.business.user.dto.UserDto;
 import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
@@ -19,7 +18,6 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
-    private final AuthenticationService authenticationService;
 
 
     @DeleteMapping("delete")
@@ -43,13 +41,12 @@ public class UserController {
     public UserInfo getUser(@PathVariable("id") Long id) {
         UserInfo userInfo = userService.getuserInfo(id);
         return userService.userInfoMapper(userInfo);
-
     }
 
     @GetMapping("shop/page/{num}")
     public List<UserInfo> getUsernameOfShop(@PathVariable("num") int num, HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        List<UserInfo> userInfos = userService.getusersInfoByShop(num,userInfo.getShop());
+        List<UserInfo> userInfos = userService.getusersInfoByShop(num, userInfo.getShop());
         return userService.userInfosMapper(userInfos);
     }
 
@@ -68,9 +65,9 @@ public class UserController {
     }
 
     @GetMapping("user")
-    private UserDto getUserByOwner(HttpServletRequest request) {
-        User user = jwtService.getuser(request);
-        return userService.mapper(user);
+    private UserInfo getUserInfo(HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return userService.userInfoMapper(userInfo);
     }
 
     @PostMapping("change/image")
@@ -92,11 +89,16 @@ public class UserController {
     }
 
     @PostMapping("change/shop")
-    public void changeShop(@RequestBody UserDto userDto, HttpServletRequest request) {
+    public void changeShop(@RequestBody UserDto userDto, @RequestParam("new_user") boolean new_user, HttpServletRequest request) {
 
-        UserInfo userInfo = jwtService.getUserInfo(request);
-        userService.updateShop(userInfo.getId(),userDto.getShop().getId());
+        if (!new_user) {
+            UserInfo userInfo = jwtService.getUserInfo(request);
+            userService.updateShop(userInfo.getId(), userDto.getShop().getId());
+        } else {
+            User user = jwtService.getuser(request);
+            userService.newUser(user, userDto.getShop());
 
+        }
     }
 
 }

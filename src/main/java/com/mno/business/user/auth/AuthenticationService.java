@@ -65,7 +65,12 @@ public class AuthenticationService {
 
         if (Objects.equals(request.gmail, getAdminGmail())) {
 
-            User user = User.builder().name(request.name).gmail(request.gmail).address(request.address).password(passwordEncoder.encode(request.getPassword())).role(Role.ADMIN).build();
+            User user = User.builder()
+                    .name(request.name)
+                    .gmail(request.gmail)
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.ADMIN)
+                    .build();
             var savedUser = userRepo.save(user);
             var jwtToken = jwtService.generateToken(user);
             saveUserToken(savedUser, jwtToken);
@@ -74,7 +79,12 @@ public class AuthenticationService {
 
         } else {
 
-            User user = User.builder().name(request.name).gmail(request.gmail).address(request.address).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
+            User user = User.builder()
+                    .name(request.name)
+                    .gmail(request.gmail)
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.USER)
+                    .build();
             var savedUser = userRepo.save(user);
             var jwtToken = jwtService.generateToken(user);
             saveUserToken(savedUser, jwtToken);

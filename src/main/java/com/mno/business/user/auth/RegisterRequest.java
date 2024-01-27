@@ -15,6 +15,5 @@ public class RegisterRequest {
     public String name;
     public String gmail;
     public String password;
-    public String address;
 
 }

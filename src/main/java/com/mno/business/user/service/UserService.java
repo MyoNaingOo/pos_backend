@@ -45,7 +45,6 @@ public class UserService {
                 .id(user.getId())
                 .gmail(user.getGmail())
                 .name(user.getName())
-                .address(user.getAddress())
                 .role(user.getRole())
                 .build();
 
@@ -56,7 +55,6 @@ public class UserService {
                 .id(user.getId())
                 .gmail(user.getGmail())
                 .name(user.getName())
-                .address(user.getAddress())
                 .role(user.getRole())
                 .build();
 
@@ -76,6 +74,7 @@ public class UserService {
     public UserInfo userInfoMapper(UserInfo userInfo){
         User user = responeUser(userInfo.getUser());
         return UserInfo.builder()
+                .id(userInfo.getId())
                 .shop(userInfo.getShop())
                 .user(user)
                 .user_img(userInfo.getUser_img())
@@ -169,6 +168,15 @@ public class UserService {
 
     public void updateShop(Long user_infoId,Long shop_id){
         userInfoRepo.updateShop(user_infoId,shop_id);
+    }
+
+    public void newUser(User user,Shop shop){
+        UserInfo userInfo = UserInfo.builder()
+                .user(user)
+                .shop(shop)
+                .build();
+        userInfoRepo.save(userInfo);
+
     }
 
 

@@ -32,7 +32,6 @@ public class StoreSer {
 
     public StoreDto resStoreDto(Store store) {
 
-
         return StoreDto.builder()
                 .id(store.getId())
                 .shop(store.getShop())

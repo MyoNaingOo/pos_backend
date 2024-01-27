@@ -26,7 +26,13 @@ public class ProductControl {
     @PostMapping("add")
     public void AddProduct(@RequestBody ProductDto productDto, HttpServletRequest request) {
         User user = jwtService.getuser(request);
-        Product product = Product.builder().name(productDto.getName()).img(productDto.getImg()).description(productDto.getDescription()).user(user).time(LocalDateTime.now()).build();
+        Product product = Product.builder()
+                .name(productDto.getName())
+                .img(productDto.getImg())
+                .description(productDto.getDescription())
+                .user(user)
+                .time(LocalDateTime.now())
+                .build();
         productSer.save(product);
     }
 
