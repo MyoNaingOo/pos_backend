@@ -60,6 +60,7 @@ public class ProductSer {
                 .description(product.getDescription())
                 .balance(balance)
                 .price(price)
+                .time(product.getTime())
                 .build();
     }
 

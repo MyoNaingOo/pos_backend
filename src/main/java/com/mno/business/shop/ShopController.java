@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/shop")
+@RequestMapping("api/v2/shop")
 public class ShopController {
 
     private final ShopSer shopSer;

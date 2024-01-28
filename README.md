@@ -58,6 +58,12 @@ Reg Otp  : http://localhost:8080/api/otp/register<br>
 }
 ```
 
+Shop change and update
+shop : http://localhost:8080/api/v2/user/change/shop?new_user=${boolean}
+new_user=true or null is now register user and new_user=false is registered user
+user is need shop 
+so more api of shop <a href="#shop" >there</a>
+
 <h3 id="user_login">User Login</h3>
 Login    : http://localhost:8080/api/auth/authenticate
 
@@ -68,7 +74,7 @@ Login    : http://localhost:8080/api/auth/authenticate
   "password": ""
 }
 ```
-
+http://localhost:8080/api/otp/register
 forget password: http://localhost:8080/api/auth/forGetPass
 ```json
 {
@@ -257,6 +263,8 @@ POST request :
   "address": "***"
 }
 ```
+<h4 id="shop" >Shop</h4>
+
 
 <h4 id="img_crud" >Image CRUD</h4>
 Image Add : http://localhost:8080/api/image/add POST Method <br>

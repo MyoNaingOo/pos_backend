@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/price")
+@RequestMapping("api/v2/price")
 public class ProPriceControl {
 
     private final ProPriceSer proPriceSer;

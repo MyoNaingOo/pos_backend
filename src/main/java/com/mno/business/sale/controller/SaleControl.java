@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/sale")
+@RequestMapping("api/v2/sale")
 public class SaleControl {
 
     private final SaleSer saleSer;
