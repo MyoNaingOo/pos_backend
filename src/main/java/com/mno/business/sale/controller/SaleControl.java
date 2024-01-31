@@ -1,12 +1,12 @@
 package com.mno.business.sale.controller;
 
 import com.mno.business.config.JwtService;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.Prices.ProPriceSer;
 import com.mno.business.sale.dto.SaleDto;
 import com.mno.business.sale.entity.Sale;
 import com.mno.business.sale.entity.SalePro;
 import com.mno.business.sale.service.SaleSer;
-import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,7 @@ public class SaleControl {
 
     @GetMapping("page/{num}")
     private List<SaleDto> sales(@PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.sales(num));
+        return saleSer.resSaleDtos(saleSer.findAll(num));
     }
 
     @DeleteMapping("delete/{id}")
@@ -71,6 +71,12 @@ public class SaleControl {
         saleSer.delete(id);
     }
 
+
+
+    @GetMapping("page")
+    private PageDto page(){
+        return saleSer.sales();
+    }
 
     /*
      *shop api start
@@ -84,20 +90,24 @@ public class SaleControl {
             @PathVariable("num") int num,
             HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num,userInfo.getShop()));
+        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, userInfo.getShop()));
     }
 
     @GetMapping("shop/page/{num}")
     private List<SaleDto> salesOfShop(@PathVariable("num") int num,
                                       HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return saleSer.resSaleDtos(saleSer.salesOfShop(num,userInfo.getShop()));
+        return saleSer.resSaleDtos(saleSer.findAllOfShop(num, userInfo.getShop()));
     }
 
 
 
 
-
+    @GetMapping("shop/page")
+    private PageDto pageOfShop(HttpServletRequest request){
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return saleSer.salesOfShop(userInfo.getShop());
+    }
 
 
     /*

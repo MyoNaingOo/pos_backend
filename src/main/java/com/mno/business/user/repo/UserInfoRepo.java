@@ -31,4 +31,8 @@ public interface UserInfoRepo extends JpaRepository<UserInfo,Long> {
     void updateShop(Long id,Long Shop_id);
 
 
+
+    @Query(value = "SELECT COUNT(id) FROM user_info WHERE shop_id= ?1",nativeQuery = true)
+    Integer getUserCountOfShop(Long shop_id);
+
 }

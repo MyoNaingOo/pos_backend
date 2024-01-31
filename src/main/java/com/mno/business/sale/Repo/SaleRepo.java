@@ -28,4 +28,11 @@ public interface SaleRepo extends JpaRepository<Sale, Long> {
     List<Sale> findByMonthOfShop(int month, int year, Long shop_id, Pageable pageable);
 
 
+    @Query(value = "SELECT COUNT(id) FROM sale WHERE shop_id= ?1" ,nativeQuery = true)
+    int sales(Long id);
+
+
+    @Query(value = "SELECT COUNT(id) FROM sale " ,nativeQuery = true)
+    int sales();
+
 }

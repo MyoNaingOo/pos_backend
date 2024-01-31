@@ -63,6 +63,15 @@ shop : http://localhost:8080/api/v2/user/change/shop?new_user=${boolean}
 new_user=true or null is now register user and new_user=false is registered user
 user is need shop 
 so more api of shop <a href="#shop" >there</a>
+```json
+{
+  "shop": {
+    "id" : 1  //shop_id
+  }
+}
+
+```
+
 
 <h3 id="user_login">User Login</h3>
 Login    : http://localhost:8080/api/auth/authenticate
@@ -160,14 +169,19 @@ More details example : https://github.com/MyoNaingOo/shopAng/blob/master/src/app
 <h3 id="other_user_api">Other Api for User</h3>
 <p style="color:#f80" >It has Logined status</p>
 
-Get User info    : http://localhost:8080/api/v1/user/user (Logined user information)
+Get User info    : http://localhost:8080/api/v2/user/user (Logined user information)
 
-Get User info By id   : http://localhost:8080/api/v1/user/userid/${id} <br>
-Get User info By name   : http://localhost:8080/api/v1/user/username/${name} <br>
-Get User info By gmail   : http://localhost:8080/api/v1/user/usergmaill/${gmail} <br>
+Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
+Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
+Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
 
-Get Users info : http://localhost:8080/api/v1/user/users/page/${page_number} <br>
+Get Users info : http://localhost:8080/api/v2/user/users/page/${page_number} <br>
 page_number start = 0 // number zero
+
+Get Users info of shop : http://localhost:8080/api/v2/user/shop/page/${page_number} <br>
+shop find by logined user shop.
+
+
 
 response obj :
 

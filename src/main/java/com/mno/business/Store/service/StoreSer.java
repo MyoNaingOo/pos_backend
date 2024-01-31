@@ -4,6 +4,7 @@ package com.mno.business.Store.service;
 import com.mno.business.Store.Repo.StoreRepo;
 import com.mno.business.Store.dto.StoreDto;
 import com.mno.business.Store.entity.Store;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
 import com.mno.business.shop.Shop;
@@ -58,21 +59,22 @@ public class StoreSer {
 
     public void addStore(UserInfo userInfo, StoreDto storeDto) {
         Product product = productSer.getProduct(storeDto.getProduct_id());
-        if (storeDto.isUser_shop()) {
+        if (!storeDto.isUser_shop()) {
             Store store = Store.builder()
                     .product(product)
                     .user(userInfo.getUser())
-                    .shop(userInfo.getShop())
+                    .shop(storeDto.getShop())
                     .bulk(storeDto.getBulk())
                     .update_bulk(0)
                     .time(LocalDateTime.now())
                     .build();
             storeRepo.save(store);
+
         } else {
             Store store = Store.builder()
                     .product(product)
                     .user(userInfo.getUser())
-                    .shop(storeDto.getShop())
+                    .shop(userInfo.getShop())
                     .bulk(storeDto.getBulk())
                     .update_bulk(0)
                     .time(LocalDateTime.now())
@@ -207,5 +209,18 @@ public class StoreSer {
     public List<Store> getProductsSold(int num) {
         Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
         return storeRepo.getProductsSold(pageable);
+    }
+
+    public PageDto stores() {
+
+        int stores = storeRepo.stores();
+        int page_size = stores /20;
+        return PageDto.builder().number(stores).page_size(page_size).build();
+    }
+
+    public PageDto storesOfShop(Shop shop) {
+        int stores = storeRepo.storesOfShop(shop.getId());
+        int page_size = stores /20;
+        return PageDto.builder().number(stores).page_size(page_size).build();
     }
 }

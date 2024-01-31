@@ -36,6 +36,9 @@ public interface UserRepo extends JpaRepository<User,Long> {
     void changePassword(Long id,String password);
 
 
+    @Query(value = "SELECT COUNT(id) FROM user",nativeQuery = true)
+    Integer getUserCount();
+
 
 
 }

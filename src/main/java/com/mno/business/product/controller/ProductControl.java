@@ -2,6 +2,7 @@ package com.mno.business.product.controller;
 
 
 import com.mno.business.config.JwtService;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.dto.ProductDto;
 import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
@@ -115,6 +116,11 @@ public class ProductControl {
     public List<ProductDto> findByMonth(@RequestParam("month") int month, @RequestParam("year") int year, @PathVariable("num") int num) {
         return productSer.findByMonth(month, year, num);
 
+    }
+
+    @GetMapping("products")
+    private PageDto products(){
+        return productSer.products();
     }
 
 }

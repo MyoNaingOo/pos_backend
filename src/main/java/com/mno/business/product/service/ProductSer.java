@@ -2,6 +2,7 @@ package com.mno.business.product.service;
 
 
 import com.mno.business.Store.Repo.StoreRepo;
+import com.mno.business.helper.PageDto;
 import com.mno.business.image.ImageService;
 import com.mno.business.product.Prices.ProPrice;
 import com.mno.business.product.Prices.ProPriceSer;
@@ -154,4 +155,10 @@ public class ProductSer {
     }
 
 
+    public PageDto products() {
+        int products = productRepo.products();
+        int page_size = products / 20;
+        return PageDto.builder().number(products).page_size(page_size).build();
+
+    }
 }

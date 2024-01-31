@@ -2,6 +2,7 @@ package com.mno.business.sale.service;
 
 
 import com.mno.business.Store.service.StoreSer;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.Prices.ProPrice;
 import com.mno.business.product.Prices.ProPriceRepo;
 import com.mno.business.product.Prices.ProPriceSer;
@@ -99,7 +100,7 @@ public class SaleSer {
 
 
 
-    public List<Sale> salesOfShop(int page_num, Shop shop) {
+    public List<Sale> findAllOfShop(int page_num, Shop shop) {
         Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
         return saleRepo.findAllByShop(shop,pageable);
     }
@@ -119,7 +120,7 @@ public class SaleSer {
      * */
 
 
-    public List<Sale> sales(int page_num) {
+    public List<Sale> findAll(int page_num) {
         Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
         return saleRepo.findAll(pageable).getContent();
     }
@@ -139,6 +140,20 @@ public class SaleSer {
     public List<Sale> findByMonth(int month, int year, int page_num) {
         Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
         return saleRepo.findByMonth(month, year, pageable);
+    }
+
+
+    public PageDto salesOfShop(Shop shop) {
+        int sales = saleRepo.sales(shop.getId());
+        int page_size = sales /20;
+        return PageDto.builder().number(sales).page_size(page_size).build();
+    }
+
+
+    public PageDto sales() {
+        int sales = saleRepo.sales();
+        int page_size = sales /20;
+        return PageDto.builder().number(sales).page_size(page_size).build();
     }
 
 

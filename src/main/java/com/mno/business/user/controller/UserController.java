@@ -1,6 +1,7 @@
 package com.mno.business.user.controller;
 
 import com.mno.business.config.JwtService;
+import com.mno.business.helper.PageDto;
 import com.mno.business.user.dto.UserDto;
 import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
@@ -50,6 +51,11 @@ public class UserController {
         return userService.userInfosMapper(userInfos);
     }
 
+    @GetMapping("shop/page")
+    private PageDto pageOfShop(HttpServletRequest request){
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return userService.usersOfShop(userInfo.getShop());
+    }
 
     @GetMapping("username/{name}")
     public UserDto getUsername(@PathVariable("name") String name) {
@@ -100,5 +106,14 @@ public class UserController {
 
         }
     }
+
+
+    @GetMapping("page")
+    private PageDto page(){
+        return userService.users();
+    }
+
+
+
 
 }

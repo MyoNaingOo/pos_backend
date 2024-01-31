@@ -71,4 +71,11 @@ public interface StoreRepo extends JpaRepository<Store, Long> {
     void removeUserByUser(Long user_id);
 
 
+    @Query(value = "SELECT COUNT(id) FROM store " ,nativeQuery = true)
+    int stores();
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE shop_id= ?1" ,nativeQuery = true)
+    int storesOfShop(Long id);
+
+
 }

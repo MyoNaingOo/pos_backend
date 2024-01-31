@@ -1,10 +1,12 @@
 package com.mno.business.user.service;
 
 import com.mno.business.Store.Repo.StoreRepo;
+import com.mno.business.helper.PageDto;
 import com.mno.business.image.ImageService;
 import com.mno.business.product.Repo.ProductRepo;
 import com.mno.business.sale.Repo.SaleRepo;
 import com.mno.business.shop.Shop;
+import com.mno.business.shop.ShopSer;
 import com.mno.business.user.dto.UserDto;
 import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
@@ -37,7 +39,7 @@ public class UserService {
     private final OtpRepo otpRepo;
     private final UserInfoRepo userInfoRepo;
     private final ImageService imageService;
-
+    private final ShopSer shopSer;
 
 
     public UserDto mapper(User user) {
@@ -171,13 +173,28 @@ public class UserService {
     }
 
     public void newUser(User user,Shop shop){
+        Shop shop1 = shopSer.shop(shop.getId());
         UserInfo userInfo = UserInfo.builder()
                 .user(user)
-                .shop(shop)
+                .shop(shop1)
                 .build();
         userInfoRepo.save(userInfo);
 
     }
+
+    public PageDto users(){
+
+        int users = userRepo.getUserCount();
+        int page_size = users / 20;
+        return PageDto.builder().page_size(page_size).number(users).build();
+    }
+
+    public PageDto usersOfShop(Shop shop){
+        int users = userInfoRepo.getUserCountOfShop(shop.getId());
+        int page_size = users / 20;
+        return PageDto.builder().page_size(page_size).number(users).build();
+    }
+
 
 
 }

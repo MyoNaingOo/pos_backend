@@ -29,5 +29,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByNameContainingAndDescriptionContaining(String name,String description, Pageable pageable);
 
 
+    @Query(value = "SELECT COUNT(id) FROM product",nativeQuery = true)
+    int products();
 
 }

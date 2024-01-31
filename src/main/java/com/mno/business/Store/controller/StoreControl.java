@@ -4,6 +4,7 @@ package com.mno.business.Store.controller;
 import com.mno.business.Store.dto.StoreDto;
 import com.mno.business.Store.service.StoreSer;
 import com.mno.business.config.JwtService;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.Repo.ProductRepo;
 import com.mno.business.user.entity.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -77,8 +78,11 @@ public class StoreControl {
         return storeSer.resStoreDtos(storeSer.findAllByProductOfShop(product_id, num,userInfo.getShop()));
     }
 
-
-
+    @GetMapping("shop/page")
+    private PageDto pageOfShop(HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return storeSer.storesOfShop(userInfo.getShop());
+    }
 
 
 
@@ -98,6 +102,14 @@ public class StoreControl {
     private List<StoreDto> page(@PathVariable("num") int id) {
         return storeSer.resStoreDtos(storeSer.storeList(id));
     }
+
+
+    @GetMapping("page")
+    private PageDto page(HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return storeSer.stores();
+    }
+
 
     @GetMapping("prosBalance/{num}")
     public List<StoreDto> getProductsBalance(@PathVariable("num") int num) {
