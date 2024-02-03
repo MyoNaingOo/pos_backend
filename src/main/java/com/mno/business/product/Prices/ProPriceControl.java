@@ -3,9 +3,11 @@ package com.mno.business.product.Prices;
 import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ public class ProPriceControl {
 
     private final ProPriceSer proPriceSer;
     private final ProductSer productSer;
+    private final ProPriceDto proPriceDto;
 
     @PostMapping("add")
     private void add(@RequestBody ProPriceDto proPriceDto) {
@@ -27,6 +30,13 @@ public class ProPriceControl {
 
         proPriceSer.add(proPrice);
     }
+
+    @GetMapping("page/{num}")
+    private List<ProPriceDto> proPriceByProduct(@PathVariable("num") int num,@RequestParam("product_id") Long product_id){
+        List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id,num);
+        return proPriceDto.proPriceDtos(proPrices);
+    }
+
 
     @DeleteMapping("delete/{id}")
     private void delete(@PathVariable("id") Long id) {

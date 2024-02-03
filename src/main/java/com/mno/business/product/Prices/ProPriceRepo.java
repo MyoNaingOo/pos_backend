@@ -1,6 +1,7 @@
 package com.mno.business.product.Prices;
 
 import com.mno.business.product.entity.Product;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,8 @@ public interface ProPriceRepo extends JpaRepository<ProPrice,Long> {
     Optional<ProPrice> findLtsProPrice(Long product_id);
 
 
-    List<ProPrice> findAllByProduct(Product product);
+    @Query(value = "SELECT * FROM pro_price WHERE product_id= ?1",nativeQuery = true)
+    List<ProPrice> findAllByProduct(Long product_id, Pageable pageable);
 
 
 }

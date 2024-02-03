@@ -2,6 +2,9 @@ package com.mno.business.product.Prices;
 
 import com.mno.business.product.entity.Product;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +48,9 @@ public class ProPriceSer {
         return resProPrice(proPriceRepo.findById(id).orElse(null));
     }
 
-    public List<ProPrice> findAllByProduct(Product product) {
-        return proPriceRepo.findAllByProduct(product);
+    public List<ProPrice> findAllByProduct(Long product_id,int num) {
+        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+        return proPriceRepo.findAllByProduct(product_id,pageable);
     }
 
     public ProPrice LtsProPrice(Long product_id) {

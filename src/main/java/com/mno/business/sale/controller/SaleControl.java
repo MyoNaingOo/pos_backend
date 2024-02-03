@@ -52,20 +52,6 @@ public class SaleControl {
 
     }
 
-
-    @GetMapping("findByMonth/{num}")
-    private List<SaleDto> findByMonth(
-            @RequestParam("month") int month,
-            @RequestParam("year") int year,
-            @PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num));
-    }
-
-    @GetMapping("page/{num}")
-    private List<SaleDto> sales(@PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.findAll(num));
-    }
-
     @DeleteMapping("delete/{id}")
     private void delete(@PathVariable("id") Long id) {
         saleSer.delete(id);
@@ -99,9 +85,6 @@ public class SaleControl {
         UserInfo userInfo = jwtService.getUserInfo(request);
         return saleSer.resSaleDtos(saleSer.findAllOfShop(num, userInfo.getShop()));
     }
-
-
-
 
     @GetMapping("shop/page")
     private PageDto pageOfShop(HttpServletRequest request){

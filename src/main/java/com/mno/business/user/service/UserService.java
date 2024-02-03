@@ -8,6 +8,7 @@ import com.mno.business.sale.Repo.SaleRepo;
 import com.mno.business.shop.Shop;
 import com.mno.business.shop.ShopSer;
 import com.mno.business.user.dto.UserDto;
+import com.mno.business.user.entity.Role;
 import com.mno.business.user.entity.User;
 import com.mno.business.user.entity.UserInfo;
 import com.mno.business.user.otb.OtpRepo;
@@ -193,6 +194,13 @@ public class UserService {
         int users = userInfoRepo.getUserCountOfShop(shop.getId());
         int page_size = users / 20;
         return PageDto.builder().page_size(page_size).number(users).build();
+    }
+
+
+
+    public void setRole(Long user_id, Role role){
+        userRepo.setRole(user_id,role.name());
+
     }
 
 

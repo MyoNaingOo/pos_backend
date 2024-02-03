@@ -1,5 +1,6 @@
 package com.mno.business.user.repo;
 
+import com.mno.business.user.entity.Role;
 import com.mno.business.user.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,6 +40,8 @@ public interface UserRepo extends JpaRepository<User,Long> {
     @Query(value = "SELECT COUNT(id) FROM user",nativeQuery = true)
     Integer getUserCount();
 
+    @Query(value = "UPDATE user u SET u.role = ?2 WHERE u.id= ?1",nativeQuery = true)
+    void setRole(Long user_id, String role);
 
 
 }

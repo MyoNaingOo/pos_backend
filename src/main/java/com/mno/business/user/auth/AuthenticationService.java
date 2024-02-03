@@ -32,8 +32,8 @@ public class AuthenticationService {
     private final OtpService otpService;
     private final UserService userService;
 
-    @Value("${my-user.admin.gmail}")
-    private String adminGmail;
+    @Value("${my-user.owner.gmail}")
+    private String ownerGmail;
 
 
     public UserDto register(RegisterRequest request) {
@@ -63,13 +63,13 @@ public class AuthenticationService {
 
     private UserDto createUser(RegisterRequest request) {
 
-        if (Objects.equals(request.gmail, getAdminGmail())) {
+        if (Objects.equals(request.gmail, getOwnerGmail())) {
 
             User user = User.builder()
                     .name(request.name)
                     .gmail(request.gmail)
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.ADMIN)
+                    .role(Role.OWNER)
                     .build();
             var savedUser = userRepo.save(user);
             var jwtToken = jwtService.generateToken(user);

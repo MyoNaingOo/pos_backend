@@ -83,28 +83,10 @@ public class ProductControl {
      *
      * */
 
-    @GetMapping("find/name/{num}/{name}")
-    private List<ProductDto> findProductByName(@PathVariable("name") String name, @PathVariable("num") int num) {
-        return productSer.findByName(name, num);
-    }
-
-
     @GetMapping("find/code/{code}")
     public ProductDto getProductByCode(@PathVariable("code") Long code) {
         Product product = productSer.getProductByCode(code);
         return productSer.changeProDto(product);
-    }
-
-
-    @GetMapping("find/{value}/{num}")
-    private List<ProductDto> findProduct(@PathVariable("value") String value, @PathVariable("num") int num) {
-        return productSer.changeListProDto(productSer.findProduct(num, value));
-    }
-
-
-    @GetMapping("page/{num}")
-    private List<ProductDto> products(@PathVariable("num") int num) {
-        return productSer.changeListProDto(productSer.findAll(num));
     }
 
     @DeleteMapping("delete/{id}")
@@ -112,11 +94,7 @@ public class ProductControl {
         productSer.deleteProduct(id);
     }
 
-    @GetMapping("findByMonth/{num}")
-    public List<ProductDto> findByMonth(@RequestParam("month") int month, @RequestParam("year") int year, @PathVariable("num") int num) {
-        return productSer.findByMonth(month, year, num);
 
-    }
 
     @GetMapping("products")
     private PageDto products(){

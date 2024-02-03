@@ -27,17 +27,6 @@ public class UserController {
         userService.deleteUser(user.getId());
     }
 
-    @DeleteMapping("delete/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-    }
-
-    @GetMapping("page/{num}")
-    public List<UserDto> getusers(@PathVariable("num") int num) {
-        List<User> users = userService.getUsers(num);
-        return userService.ListMapper(users);
-    }
-
     @GetMapping("userid/{id}")
     public UserInfo getUser(@PathVariable("id") Long id) {
         UserInfo userInfo = userService.getuserInfo(id);
@@ -105,12 +94,6 @@ public class UserController {
             userService.newUser(user, userDto.getShop());
 
         }
-    }
-
-
-    @GetMapping("page")
-    private PageDto page(){
-        return userService.users();
     }
 
 
