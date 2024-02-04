@@ -30,6 +30,6 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
 
     @Query(value = "SELECT COUNT(id) FROM product",nativeQuery = true)
-    int products();
+    int productsCount();
 
 }

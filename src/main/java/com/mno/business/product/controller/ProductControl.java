@@ -96,7 +96,7 @@ public class ProductControl {
 
 
 
-    @GetMapping("products")
+    @GetMapping("page")
     private PageDto products(){
         return productSer.products();
     }

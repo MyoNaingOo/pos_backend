@@ -58,19 +58,6 @@ Reg Otp  : http://localhost:8080/api/otp/register<br>
 }
 ```
 
-Shop change and update
-shop : http://localhost:8080/api/v2/user/change/shop?new_user=${boolean}
-new_user=true or null is now register user and new_user=false is registered user
-user is need shop 
-so more api of shop <a href="#shop" >there</a>
-```json
-{
-  "shop": {
-    "id" : 1  //shop_id
-  }
-}
-
-```
 
 
 <h3 id="user_login">User Login</h3>
@@ -178,10 +165,6 @@ Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail}
 Get Users info : http://localhost:8080/api/v2/user/users/page/${page_number} <br>
 page_number start = 0 // number zero
 
-Get Users info of shop : http://localhost:8080/api/v2/user/shop/page/${page_number} <br>
-shop find by logined user shop.
-
-
 
 response obj :
 
@@ -277,7 +260,6 @@ POST request :
   "address": "***"
 }
 ```
-<h4 id="shop" >Shop</h4>
 
 
 <h4 id="img_crud" >Image CRUD</h4>

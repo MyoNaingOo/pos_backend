@@ -156,7 +156,7 @@ public class ProductSer {
 
 
     public PageDto products() {
-        int products = productRepo.products();
+        int products = productRepo.productsCount();
         int page_size = products / 20;
         return PageDto.builder().number(products).page_size(page_size).build();
 
