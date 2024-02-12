@@ -9,9 +9,7 @@ public enum Role {
     SALEMANAGER,
     STOREWORKER,
     STOREMANAGER,
-
-
-    ADMIN,
+    USERMANAGER,
     USER
 
 }

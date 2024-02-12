@@ -30,32 +30,6 @@ public class ProPriceDto {
     private ProductSer productSer;
 
 
-    public ProPriceDto proPriceDto(ProPrice proPrice) {
-        ProductDto productDto = productSer.changeProDto(proPrice.getProduct());
-        ProPriceDto proPriceDto = ProPriceDto.builder()
-                .id(proPrice.getId())
-                .productDto(productDto)
-                .org_price(proPrice.getOrg_price())
-                .promo_price(proPrice.getPromo_price())
-                .date(proPrice.getDate())
-                .build();
-        return proPriceDto;
-
-    }
-
-
-    public List<ProPriceDto> proPriceDtos(List<ProPrice> proPrices) {
-
-        List<ProPriceDto> proPricesDtos = new ArrayList<>();
-        proPrices.forEach(
-                proPrice -> {
-                    ProPriceDto proPriceDto = proPriceDto(proPrice);
-                    proPricesDtos.add(proPriceDto);
-                }
-        );
-        return proPricesDtos;
-    }
-
 
 
 }

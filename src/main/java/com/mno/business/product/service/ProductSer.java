@@ -121,7 +121,7 @@ public class ProductSer {
         return productRepo.findById(id).orElse(null);
     }
 
-    public Product getProductByCode(Long code) {
+    public Product getProductByCode(String code) {
         return productRepo.findByCode(code).orElse(null);
     }
 

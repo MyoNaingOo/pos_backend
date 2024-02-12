@@ -22,7 +22,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     @Query(value = "update product set user_id=NULL where user_id=?1", nativeQuery = true)
     void removeUserByUser(Long user_id);
 
-    Optional<Product> findByCode(Long code);
+    Optional<Product> findByCode(String code);
 
     List<Product> findByNameContaining(String name, Pageable pageable);
 

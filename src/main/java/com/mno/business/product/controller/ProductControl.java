@@ -64,7 +64,7 @@ public class ProductControl {
 
 
     @GetMapping("shop/find/code/{code}")
-    public ProductDto getProductByCodeOfShop(@PathVariable("code") Long code, HttpServletRequest request) {
+    public ProductDto getProductByCodeOfShop(@PathVariable("code") String code, HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         Product product = productSer.getProductByCode(code);
         return productSer.changeProDtoOfShop(product, userInfo.getShop());
@@ -84,7 +84,7 @@ public class ProductControl {
      * */
 
     @GetMapping("find/code/{code}")
-    public ProductDto getProductByCode(@PathVariable("code") Long code) {
+    public ProductDto getProductByCode(@PathVariable("code") String code) {
         Product product = productSer.getProductByCode(code);
         return productSer.changeProDto(product);
     }

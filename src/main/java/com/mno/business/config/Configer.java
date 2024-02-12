@@ -43,7 +43,7 @@ public class Configer {
                                             "/api/otp/**"
                                     ).permitAll()
                                     .requestMatchers("/api/v1/user/delete").authenticated()
-                                    .requestMatchers("/api/v1/user/delete/**").hasAuthority(Role.ADMIN.name())
+                                    .requestMatchers("/api/v1/user/delete/**").hasAuthority(Role.USERMANAGER.name())
                                     .requestMatchers("/**").fullyAuthenticated()
                                     .anyRequest().authenticated();
 

@@ -21,7 +21,7 @@ public class ProductDto {
     private String img;
     private Long user_id;
     private User user;
-    private Long code;
+    private String code;
     private String description;
     private int balance;
     private ProPrice price;

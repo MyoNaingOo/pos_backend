@@ -16,7 +16,6 @@ public class ProPriceControl {
 
     private final ProPriceSer proPriceSer;
     private final ProductSer productSer;
-    private final ProPriceDto proPriceDto;
 
     @PostMapping("add")
     private void add(@RequestBody ProPriceDto proPriceDto) {
@@ -32,9 +31,9 @@ public class ProPriceControl {
     }
 
     @GetMapping("page/{num}")
-    private List<ProPriceDto> proPriceByProduct(@PathVariable("num") int num,@RequestParam("product_id") Long product_id){
-        List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id,num);
-        return proPriceDto.proPriceDtos(proPrices);
+    private List<ProPriceDto> proPriceByProduct(@PathVariable("num") int num, @RequestParam("product_id") Long product_id) {
+        List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id, num);
+        return proPriceSer.proPriceDtos(proPrices);
     }
 
 

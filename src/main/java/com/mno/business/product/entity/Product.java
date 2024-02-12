@@ -29,7 +29,7 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Long code;
+    private String code;
 
     private String description;
     private LocalDateTime time;

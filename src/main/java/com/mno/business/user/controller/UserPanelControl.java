@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("api/v2/panel/user")
@@ -56,32 +57,33 @@ public class UserPanelControl {
     }
 
 
-
     @PostMapping("setCEO")
-    private void setCeo(@RequestParam("user_id") Long user_id, HttpServletRequest request){
-         User user = jwtService.getuser(request);
+    private void setCeo(@RequestParam("user_id") Long user_id, HttpServletRequest request) {
+        User user = jwtService.getuser(request);
 
-         if (user.getRole() == Role.OWNER){
-            userService.setRole(user_id,Role.CEO);
-         }
+        if (user.getRole() == Role.OWNER) {
+            userService.setRole(user_id, Role.CEO);
+        }
 
     }
 
     @PostMapping("change/role/{user_id}")
-    private void setRole(@PathVariable("user_id") Long user_id,@RequestParam String role){
-//
-//        switch (role){
-//            case (role == Role.)
-//
-//
-//
-//        }
+    private void setRole(@PathVariable("user_id") Long user_id, @RequestParam("role") String role) {
 
-
-
+        if (Objects.equals(role, Role.USER.name())) {
+            userService.setRole(user_id, Role.USER);
+        } else if (Objects.equals(role, Role.USERMANAGER.name())) {
+            userService.setRole(user_id, Role.USERMANAGER);
+        } else if (Objects.equals(role, Role.STOREWORKER.name())) {
+            userService.setRole(user_id, Role.USERMANAGER);
+        } else if (Objects.equals(role, Role.STOREMANAGER.name())) {
+            userService.setRole(user_id, Role.USERMANAGER);
+        } else if (Objects.equals(role, Role.SALEWORKER.name())) {
+            userService.setRole(user_id, Role.USERMANAGER);
+        } else if (Objects.equals(role, Role.SALEMANAGER.name())) {
+            userService.setRole(user_id, Role.USERMANAGER);
+        }
     }
-
-
 
 
 }

@@ -20,8 +20,7 @@ public class ProductPanelControl {
     private final ShopSer shopSer;
 
 
-
-//    shop start
+    //    shop start
     @GetMapping("shop/page/{num}")
     private List<ProductDto> productsOfShop(@PathVariable("num") int num, @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
@@ -37,7 +36,7 @@ public class ProductPanelControl {
 
 
     @GetMapping("shop/find/code/{code}")
-    public ProductDto getProductByCodeOfShop(@PathVariable("code") Long code, @RequestParam("shop_id") Long shop_id) {
+    public ProductDto getProductByCodeOfShop(@PathVariable("code") String code, @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
         Product product = productSer.getProductByCode(code);
         return productSer.changeProDtoOfShop(product, shop);
