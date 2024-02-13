@@ -40,10 +40,11 @@ public class Configer {
                                             "/api/product/**",
                                             "/api/auth/**",
                                             "/api/image/**",
-                                            "/api/otp/**"
+                                            "/api/otp/**",
+                                            "/api/v2/shop/**"
                                     ).permitAll()
-                                    .requestMatchers("/api/v1/user/delete").authenticated()
-                                    .requestMatchers("/api/v1/user/delete/**").hasAuthority(Role.USERMANAGER.name())
+                                    .requestMatchers("/api/v2/user/delete").authenticated()
+                                    .requestMatchers("/api/v2/user/delete/**").hasAuthority(Role.USERMANAGER.name())
                                     .requestMatchers("/**").fullyAuthenticated()
                                     .anyRequest().authenticated();
 

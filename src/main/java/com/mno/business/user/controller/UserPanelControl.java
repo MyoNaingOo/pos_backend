@@ -57,7 +57,7 @@ public class UserPanelControl {
     }
 
 
-    @PostMapping("setCEO")
+    @PutMapping("setCEO")
     private void setCeo(@RequestParam("user_id") Long user_id, HttpServletRequest request) {
         User user = jwtService.getuser(request);
 
@@ -67,21 +67,21 @@ public class UserPanelControl {
 
     }
 
-    @PostMapping("change/role/{user_id}")
-    private void setRole(@PathVariable("user_id") Long user_id, @RequestParam("role") String role) {
+    @PutMapping("change/role")
+    private void setRole(@RequestParam("user_id") Long user_id, @RequestParam("roleAccess") String role) {
 
         if (Objects.equals(role, Role.USER.name())) {
             userService.setRole(user_id, Role.USER);
         } else if (Objects.equals(role, Role.USERMANAGER.name())) {
             userService.setRole(user_id, Role.USERMANAGER);
         } else if (Objects.equals(role, Role.STOREWORKER.name())) {
-            userService.setRole(user_id, Role.USERMANAGER);
+            userService.setRole(user_id, Role.STOREWORKER);
         } else if (Objects.equals(role, Role.STOREMANAGER.name())) {
-            userService.setRole(user_id, Role.USERMANAGER);
+            userService.setRole(user_id, Role.STOREMANAGER);
         } else if (Objects.equals(role, Role.SALEWORKER.name())) {
-            userService.setRole(user_id, Role.USERMANAGER);
+            userService.setRole(user_id, Role.SALEWORKER);
         } else if (Objects.equals(role, Role.SALEMANAGER.name())) {
-            userService.setRole(user_id, Role.USERMANAGER);
+            userService.setRole(user_id, Role.SALEMANAGER);
         }
     }
 

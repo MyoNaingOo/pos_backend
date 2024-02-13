@@ -40,6 +40,8 @@ public interface UserRepo extends JpaRepository<User,Long> {
     @Query(value = "SELECT COUNT(id) FROM user",nativeQuery = true)
     Integer getUserCount();
 
+    @Modifying
+    @Transactional
     @Query(value = "UPDATE user u SET u.role = ?2 WHERE u.id= ?1",nativeQuery = true)
     void setRole(Long user_id, String role);
 

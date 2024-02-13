@@ -60,6 +60,12 @@ public class UserController {
     }
 
     @GetMapping("user")
+    private User getUser(HttpServletRequest request) {
+        User user = jwtService.getuser(request);
+        return userService.responeUser(user);
+    }
+
+    @GetMapping("userInfo")
     private UserInfo getUserInfo(HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         return userService.userInfoMapper(userInfo);
