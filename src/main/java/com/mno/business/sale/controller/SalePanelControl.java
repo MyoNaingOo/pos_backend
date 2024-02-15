@@ -34,6 +34,17 @@ public class SalePanelControl {
         return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, shop));
     }
 
+
+    @GetMapping("shop/findByMonth/page")
+    private PageDto pageByMonthOfShop(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year,
+            @RequestParam("shop_id") Long shop_id) {
+        Shop shop = shopSer.shop(shop_id);
+        return saleSer.pageByMonthOfShop(month, year, shop);
+    }
+
+
     @GetMapping("shop/page/{num}")
     private List<SaleDto> salesOfShop(
             @PathVariable("num") int num,
@@ -49,6 +60,7 @@ public class SalePanelControl {
         return saleSer.salesOfShop(shop);
     }
 
+
 // shop end
 
     @GetMapping("findByMonth/{num}")
@@ -59,9 +71,23 @@ public class SalePanelControl {
         return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num));
     }
 
+
+    @GetMapping("findByMonth/page")
+    private PageDto pageByMonth(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year) {
+        return saleSer.pageByMonth(month, year);
+    }
+
+
     @GetMapping("page/{num}")
     private List<SaleDto> sales(@PathVariable("num") int num) {
         return saleSer.resSaleDtos(saleSer.findAll(num));
+    }
+
+    @GetMapping("page")
+    private PageDto page() {
+        return saleSer.sales();
     }
 
 

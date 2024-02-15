@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v2/sale")
+@RequestMapping("api/v2/shop/sale/")
 public class SaleControl {
 
     private final SaleSer saleSer;
@@ -57,19 +57,14 @@ public class SaleControl {
         saleSer.delete(id);
     }
 
-
-
-    @GetMapping("page")
-    private PageDto page(){
-        return saleSer.sales();
-    }
-
     /*
      *shop api start
      *
      * */
 
-    @GetMapping("shop/findByMonth/{num}")
+//   find by month of shop page num and page
+
+    @GetMapping("findByMonth/{num}")
     private List<SaleDto> findByMonthOfShop(
             @RequestParam("month") int month,
             @RequestParam("year") int year,
@@ -79,15 +74,28 @@ public class SaleControl {
         return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, userInfo.getShop()));
     }
 
-    @GetMapping("shop/page/{num}")
+    @GetMapping("findByMonth/page")
+    private PageDto pageByMonthOfShop(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year,
+            @PathVariable("num") int num,
+            HttpServletRequest request) {
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return saleSer.pageByMonthOfShop(month, year, userInfo.getShop());
+    }
+
+
+//    sale of shop page num and page
+
+    @GetMapping("page/{num}")
     private List<SaleDto> salesOfShop(@PathVariable("num") int num,
                                       HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         return saleSer.resSaleDtos(saleSer.findAllOfShop(num, userInfo.getShop()));
     }
 
-    @GetMapping("shop/page")
-    private PageDto pageOfShop(HttpServletRequest request){
+    @GetMapping("page")
+    private PageDto pageOfShop(HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         return saleSer.salesOfShop(userInfo.getShop());
     }

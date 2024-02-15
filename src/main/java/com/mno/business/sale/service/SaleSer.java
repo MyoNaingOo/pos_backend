@@ -143,8 +143,11 @@ public class SaleSer {
     }
 
 
+
+
+
     public PageDto salesOfShop(Shop shop) {
-        int sales = saleRepo.sales(shop.getId());
+        int sales = saleRepo.saleOfShop(shop.getId());
         int page_size = sales /20;
         return PageDto.builder().number(sales).page_size(page_size).build();
     }
@@ -157,4 +160,17 @@ public class SaleSer {
     }
 
 
+    public PageDto pageByMonthOfShop(int month, int year, Shop shop) {
+        int number = saleRepo.findCountByMonthOfShop(month,year,shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+
+
+    public PageDto pageByMonth(int month, int year) {
+        int number = saleRepo.findCountByMonth(month,year);
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
 }
