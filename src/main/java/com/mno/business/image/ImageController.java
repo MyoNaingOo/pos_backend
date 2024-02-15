@@ -19,30 +19,30 @@ public class ImageController {
     private ImageService imageService;
 
 
-    @PostMapping(value = "add",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public void ploadimage(@RequestParam("file")MultipartFile[] files) throws IOException {
+    @PostMapping(value = "add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public void ploadimage(@RequestParam("file") MultipartFile[] files) throws IOException {
 
-        for(MultipartFile file : files) {
-            String uploadimage = imageService.uploadfile(file);
+        for (MultipartFile file : files) {
+             imageService.uploadfile(file);
         }
 
     }
 
     @GetMapping("{filename}")
     public ResponseEntity<?> downloadimage(@PathVariable("filename") String file) throws IOException {
-        try{
+        try {
             byte[] imageData = imageService.downloadImage(file);
             return ResponseEntity.status(HttpStatus.OK)
                     .contentType(MediaType.valueOf("image/png"))
                     .body(imageData);
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("image is not right");
         }
     }
 
     @DeleteMapping("delete/{filename}")
-    public void deleteByName(@PathVariable("filename") String filename){
+    public void deleteByName(@PathVariable("filename") String filename) {
         imageService.deleteByName(filename);
     }
 
