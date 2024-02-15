@@ -146,6 +146,13 @@ public class ProductSer {
         Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
         return productRepo.findByNameContainingAndDescriptionContaining(find,find,pageable);
     }
+    public PageDto findProductPage(String find){
+        int number = productRepo.pageOfNameContainingAndDescriptionContaining(find,find);
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+
+
+    }
 
     public List<ProductDto> findByMonth(int month,int year,int num) {
         Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());

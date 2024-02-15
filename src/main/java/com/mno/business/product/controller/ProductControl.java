@@ -76,7 +76,11 @@ public class ProductControl {
         return productSer.changeListProDtoOfShop(productSer.findProduct(num, value), userInfo.getShop());
     }
 
+    @GetMapping("shop/find/{value}/page")
+    private PageDto pageOfFindProductOfShop(@PathVariable("value") String value, HttpServletRequest request) {
+        return productSer.findProductPage(value);
 
+    }
 
     /*
      *shop api end

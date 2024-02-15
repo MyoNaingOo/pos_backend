@@ -56,11 +56,6 @@ public class ProductPanelControl {
     }
 
 
-    @GetMapping("find/name/{num}/{name}")
-    private List<ProductDto> findProductByName(@PathVariable("name") String name, @PathVariable("num") int num) {
-        return productSer.findByName(name, num);
-    }
-
     @GetMapping("find/{value}/{num}")
     private List<ProductDto> findProduct(@PathVariable("value") String value, @PathVariable("num") int num) {
         return productSer.changeListProDto(productSer.findProduct(num, value));
