@@ -71,11 +71,47 @@ public interface StoreRepo extends JpaRepository<Store, Long> {
     void removeUserByUser(Long user_id);
 
 
+
+//    page
+
+
     @Query(value = "SELECT COUNT(id) FROM store " ,nativeQuery = true)
     int stores();
 
     @Query(value = "SELECT COUNT(id) FROM store WHERE shop_id= ?1" ,nativeQuery = true)
     int storesOfShop(Long id);
+
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk!=update_bulk", nativeQuery = true)
+    int pageOfBalance();
+
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk!=update_bulk AND shop_id = ?1", nativeQuery = true)
+    int pageOfBalanceAndShop(Long shop_id);
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk=update_bulk", nativeQuery = true)
+    int pageOfSold();
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk=update_bulk AND shop_id= ?1 ", nativeQuery = true)
+    int pageOfSoldAndShop(Long shop_id);
+
+
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE MONTH(time)= ?1 AND  YEAR(time)= ?2", nativeQuery = true)
+    int pageOfMonthAndYear(int month, int year);
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE MONTH(time)= ?1 AND  YEAR(time)= ?2 AND shop_id= ?3", nativeQuery = true)
+    int pageOfMonthAndYearAndShop(int month, int year,Long shop_id);
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE product_id= ?1 AND shop_id= ?2", nativeQuery = true)
+    int pageOfProductAndShop(Long product_id, Long shop_id);
+
+
+    @Query(value = "SELECT COUNT(id) FROM store WHERE product_id= ?1", nativeQuery = true)
+    int pageOfProduct(Long product_id);
+
+    @Query("select COUNT(id) from Store where user_id = ?1")
+    int pageOfUser(Long user_id);
 
 
 }

@@ -189,10 +189,6 @@ public class StoreSer {
         }
     }
 
-    public Integer getProductBalance(Long product_id) {
-        return storeRepo.getProBalance(product_id).orElse(0);
-    }
-
 
     public List<Store> findAllByUser(Long user_id, int num) {
         Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
@@ -211,6 +207,9 @@ public class StoreSer {
         return storeRepo.getProductsSold(pageable);
     }
 
+
+//    page
+
     public PageDto stores() {
 
         int stores = storeRepo.stores();
@@ -219,8 +218,64 @@ public class StoreSer {
     }
 
     public PageDto storesOfShop(Shop shop) {
-        int stores = storeRepo.storesOfShop(shop.getId());
-        int page_size = stores /20;
-        return PageDto.builder().number(stores).page_size(page_size).build();
+        int number = storeRepo.storesOfShop(shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+    public PageDto pageOfBalance() {
+        int number = storeRepo.pageOfBalance();
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+
+    public PageDto pageOfBalanceAndShop(Shop shop) {
+        int number = storeRepo.pageOfBalanceAndShop(shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+
+    public PageDto pageOfSold() {
+        int number = storeRepo.pageOfSold();
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+    public PageDto pageOfSoldAndShop(Shop shop) {
+        int number = storeRepo.pageOfSoldAndShop(shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+
+    public PageDto pageByProduct(Long product_id) {
+        int number = storeRepo.pageOfProduct(product_id);
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+    public PageDto pageOfProductAndShop(Long product_id,Shop shop) {
+        int number = storeRepo.pageOfProductAndShop(product_id,shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+    public PageDto pageOfMonthAndYear(int month,int year) {
+        int number = storeRepo.pageOfMonthAndYear(month,year);
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+    public PageDto pageOfMonthAndYearAndShop(int month,int year,Shop shop) {
+        int number = storeRepo.pageOfMonthAndYearAndShop(month,year,shop.getId());
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
+    }
+
+    public PageDto pageByUser(Long userId) {
+        int number = storeRepo.pageOfUser(userId);
+        int page_size = number /20;
+        return PageDto.builder().number(number).page_size(page_size).build();
     }
 }
