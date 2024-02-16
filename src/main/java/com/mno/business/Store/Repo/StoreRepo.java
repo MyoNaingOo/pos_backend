@@ -110,7 +110,8 @@ public interface StoreRepo extends JpaRepository<Store, Long> {
     @Query(value = "SELECT COUNT(id) FROM store WHERE product_id= ?1", nativeQuery = true)
     int pageOfProduct(Long product_id);
 
-    @Query("select COUNT(id) from Store where user_id = ?1")
+    @Modifying
+    @Query(value = "select COUNT(id) from store where user_id = ?1",nativeQuery = true)
     int pageOfUser(Long user_id);
 
 

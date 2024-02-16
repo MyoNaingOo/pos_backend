@@ -30,12 +30,17 @@ public class ProPriceControl {
         proPriceSer.add(proPrice);
     }
 
-    @GetMapping("page/{num}")
+    @GetMapping("product/page/{num}")
     private List<ProPriceDto> proPriceByProduct(@PathVariable("num") int num, @RequestParam("product_id") Long product_id) {
         List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id, num);
         return proPriceSer.proPriceDtos(proPrices);
     }
 
+    @GetMapping("page/{num}")
+    private List<ProPriceDto> proPrice(@PathVariable("num") int num) {
+        List<ProPrice> proPrices = proPriceSer.findAll(num);
+        return proPriceSer.proPriceDtos(proPrices);
+    }
 
     @DeleteMapping("delete/{id}")
     private void delete(@PathVariable("id") Long id) {

@@ -107,6 +107,12 @@ public class ProPriceSer {
         return proPriceRepo.findAllByProduct(product_id, pageable);
     }
 
+    public List<ProPrice> findAll( int num) {
+        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+        return proPriceRepo.findAll(pageable).getContent();
+    }
+
+
     public ProPrice LtsProPrice(Long product_id) {
 
         return resProPrice(proPriceRepo.findLtsProPrice(product_id).orElse(null));
