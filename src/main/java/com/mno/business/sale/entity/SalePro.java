@@ -22,7 +22,7 @@ public class SalePro {
 
     private Long price_id;
 
-    private int bulk;
+    private int quantity;
 
 
 }

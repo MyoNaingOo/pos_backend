@@ -186,14 +186,14 @@ public class UserService {
     public PageDto users(){
 
         int users = userRepo.getUserCount();
-        int page_size = users / 20;
-        return PageDto.builder().page_size(page_size).number(users).build();
+        int page_number = users / 20;
+        return PageDto.builder().page_number(page_number).number(users).build();
     }
 
     public PageDto usersOfShop(Shop shop){
         int users = userInfoRepo.getUserCountOfShop(shop.getId());
-        int page_size = users / 20;
-        return PageDto.builder().page_size(page_size).number(users).build();
+        int page_number = users / 20;
+        return PageDto.builder().page_number(page_number).number(users).build();
     }
 
 

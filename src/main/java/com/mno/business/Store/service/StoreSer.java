@@ -37,9 +37,9 @@ public class StoreSer {
                 .id(store.getId())
                 .shop(store.getShop())
                 .product(productSer.changeProDto(store.getProduct()))
-                .bulk(store.getBulk())
+                .quantity(store.getQuantity())
                 .user_shop(true)
-                .update_bulk(store.getUpdate_bulk())
+                .update_bulk(store.getUpdate_quantity())
                 .user(userService.responeUser(store.getUser()))
                 .time(store.getTime())
                 .build();
@@ -64,8 +64,8 @@ public class StoreSer {
                     .product(product)
                     .user(userInfo.getUser())
                     .shop(storeDto.getShop())
-                    .bulk(storeDto.getBulk())
-                    .update_bulk(0)
+                    .quantity(storeDto.getQuantity())
+                    .update_quantity(0)
                     .time(LocalDateTime.now())
                     .build();
             storeRepo.save(store);
@@ -75,8 +75,8 @@ public class StoreSer {
                     .product(product)
                     .user(userInfo.getUser())
                     .shop(userInfo.getShop())
-                    .bulk(storeDto.getBulk())
-                    .update_bulk(0)
+                    .quantity(storeDto.getQuantity())
+                    .update_quantity(0)
                     .time(LocalDateTime.now())
                     .build();
             storeRepo.save(store);
@@ -90,37 +90,62 @@ public class StoreSer {
      * */
 
 
-    public List<Store> storeListOfShop(int num, Shop shop) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> storeListOfShop(int num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.findAllByShop(shop, pageable);
     }
 
 
-    public List<Store> findByMonthAndYearOfShop(int month, int year, int num,Shop shop) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        return storeRepo.findByMonthAndYearAndShop(month, year,shop.getId(), pageable);
+    public List<Store> findByMonthAndYearOfShop(int month, int year, int num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
+        return storeRepo.findByMonthAndYearAndShop(month, year, shop.getId(), pageable);
     }
 
-    public List<Store> findAllByProductOfShop(Long product_id, int num, Shop shop) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> findAllByProductOfShop(Long product_id, int num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         Product product = productSer.getProduct(product_id);
         return storeRepo.findAllByProductAndShop(product, shop, pageable);
 
     }
 
-    public List<Store> getProductsBalanceOfShop(int num,Shop shop) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> getProductsBalanceOfShop(int num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.getProductsBalanceOfShop(shop.getId(), pageable);
     }
 
-    public List<Store> getProductsSoldOfShop(int num,Shop shop) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        return storeRepo.getProductsSoldOfShop(shop.getId(),pageable);
+    public List<Store> getProductsSoldOfShop(int num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
+        return storeRepo.getProductsSoldOfShop(shop.getId(), pageable);
     }
 
 
-    public Integer getProductBalanceOfShop(Long product_id,Shop shop) {
-        return storeRepo.getProBalanceOfShop(product_id,shop.getId()).orElse(0);
+    public Integer getProductBalanceOfShop(Long product_id, Shop shop) {
+        return storeRepo.getProBalanceOfShop(product_id, shop.getId()).orElse(0);
     }
 
     /*
@@ -134,148 +159,179 @@ public class StoreSer {
     }
 
 
-    public List<Store> storeList(int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> storeList(int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.findAll(pageable).getContent();
     }
 
     public void deleteStore(Long id) {
         Store store = getStore(id).orElse(null);
         assert store != null;
-        if (0 >= store.getUpdate_bulk()) {
+        if (0 >= store.getUpdate_quantity()) {
             storeRepo.deleteById(id);
         }
     }
 
-    public List<Store> findByMonthAndYear(int month, int year, int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> findByMonthAndYear(int month, int year, int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.findByMonthAndYear(month, year, pageable);
     }
 
 
-    public List<Store> findAllByProduct(Long product_id, int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> findAllByProduct(Long product_id, int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         Product product = productSer.getProduct(product_id);
         return storeRepo.findAllByProduct(product, pageable);
     }
 
-    public void updateBulkForSale(Long product_id, int updateBulk,Shop shop) {
+    public void updateBulkForSale(Long product_id, int updateBulk, Shop shop) {
 
         Store available = storeRepo.findAvailable(product_id, shop.getId()).orElse(null);
         if (available != null) {
-            int fistStore = available.getBulk() - available.getUpdate_bulk();
+            int fistStore = available.getQuantity() - available.getUpdate_quantity();
             if (fistStore < updateBulk) {
-                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_bulk() + fistStore);
-                updateBulkForSale(product_id, updateBulk - fistStore,shop);
+                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_quantity() + fistStore);
+                updateBulkForSale(product_id, updateBulk - fistStore, shop);
             } else {
-                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_bulk() + updateBulk);
+                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_quantity() + updateBulk);
             }
         }
     }
 
 
-    public void deleteFormSale(Long product_id, int delete_bulk,Shop shop) {
-        Store available = storeRepo.findNowUseStatusByProduct(product_id,shop.getId()).orElse(null);
+    public void deleteFormSale(Long product_id, int delete_bulk, Shop shop) {
+        Store available = storeRepo.findNowUseStatusByProduct(product_id, shop.getId()).orElse(null);
         if (available != null) {
 
-            if (delete_bulk > available.getUpdate_bulk()) {
-                int secondStore = delete_bulk - available.getUpdate_bulk();
+            if (delete_bulk > available.getUpdate_quantity()) {
+                int secondStore = delete_bulk - available.getUpdate_quantity();
                 storeRepo.changeUpdateBulk(available.getId(), 0);
-                deleteFormSale(product_id, secondStore,shop);
+                deleteFormSale(product_id, secondStore, shop);
             } else {
-                int max_delete = available.getUpdate_bulk() - delete_bulk;
+                int max_delete = available.getUpdate_quantity() - delete_bulk;
                 storeRepo.changeUpdateBulk(available.getId(), max_delete);
             }
         }
     }
 
 
-    public List<Store> findAllByUser(Long user_id, int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> findAllByUser(Long user_id, int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         User user = userService.getUser(user_id).orElse(null);
 
         return storeRepo.findAllByUser(user, pageable);
     }
 
-    public List<Store> getProductsBalance(int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> getProductsBalance(int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.getProductsBalance(pageable);
     }
 
-    public List<Store> getProductsSold(int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Store> getProductsSold(int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return storeRepo.getProductsSold(pageable);
     }
 
 
 //    page
 
-    public PageDto stores() {
+    public PageDto stores(int pageSize) {
 
         int stores = storeRepo.stores();
-        int page_size = stores /20;
-        return PageDto.builder().number(stores).page_size(page_size).build();
+        int page_number = stores / pageSize;
+        return PageDto.builder().number(stores).page_number(page_number).build();
     }
 
-    public PageDto storesOfShop(Shop shop) {
+    public PageDto storesOfShop(Shop shop,int pageSize) {
         int number = storeRepo.storesOfShop(shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
-    public PageDto pageOfBalance() {
+    public PageDto pageOfBalance(int pageSize) {
         int number = storeRepo.pageOfBalance();
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
 
-    public PageDto pageOfBalanceAndShop(Shop shop) {
+    public PageDto pageOfBalanceAndShop(Shop shop,int pageSize) {
         int number = storeRepo.pageOfBalanceAndShop(shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
 
-    public PageDto pageOfSold() {
+    public PageDto pageOfSold(int pageSize) {
         int number = storeRepo.pageOfSold();
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
-    public PageDto pageOfSoldAndShop(Shop shop) {
+
+    public PageDto pageOfSoldAndShop(Shop shop,int pageSize) {
         int number = storeRepo.pageOfSoldAndShop(shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
 
-    public PageDto pageByProduct(Long product_id) {
+    public PageDto pageByProduct(Long product_id,int pageSize) {
         int number = storeRepo.pageOfProduct(product_id);
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
-    public PageDto pageOfProductAndShop(Long product_id,Shop shop) {
-        int number = storeRepo.pageOfProductAndShop(product_id,shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+    public PageDto pageOfProductAndShop(Long product_id, Shop shop,int pageSize) {
+        int number = storeRepo.pageOfProductAndShop(product_id, shop.getId());
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
-    public PageDto pageOfMonthAndYear(int month,int year) {
-        int number = storeRepo.pageOfMonthAndYear(month,year);
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+    public PageDto pageOfMonthAndYear(int month, int year,int pageSize) {
+        int number = storeRepo.pageOfMonthAndYear(month, year);
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
-    public PageDto pageOfMonthAndYearAndShop(int month,int year,Shop shop) {
-        int number = storeRepo.pageOfMonthAndYearAndShop(month,year,shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+    public PageDto pageOfMonthAndYearAndShop(int month, int year, Shop shop,int pageSize) {
+        int number = storeRepo.pageOfMonthAndYearAndShop(month, year, shop.getId());
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
-    public PageDto pageByUser(Long userId) {
+    public PageDto pageByUser(Long userId,int pageSize) {
         int number = storeRepo.pageOfUser(userId);
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 }

@@ -34,9 +34,9 @@ public class Store {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
-    private int bulk;
+    private int quantity;
     private LocalDateTime time;
-    private int update_bulk;
+    private int update_quantity;
 
 
 

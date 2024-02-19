@@ -87,8 +87,11 @@ public class ProductControl {
     }
 
     @GetMapping("shop/find/{value}/page")
-    private PageDto pageOfFindProductOfShop(@PathVariable("value") String value, HttpServletRequest request) {
-        return productSer.findProductPage(value);
+    private PageDto pageOfFindProductOfShop(
+            @PathVariable("value") String value,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            HttpServletRequest request) {
+        return productSer.findProductPage(value,pageSize);
 
     }
 

@@ -39,52 +39,77 @@ public class StoreControl {
 
 
     @GetMapping("page/{num}")
-    private List<StoreDto> storeOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    private List<StoreDto> storeOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.storeListOfShop(num, userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.storeListOfShop(num, userInfo.getShop(), pageSize, desc));
     }
 
     @GetMapping("page")
-    private PageDto pageOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    private PageDto pageOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            HttpServletRequest request
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.storesOfShop(userInfo.getShop());
+        return storeSer.storesOfShop(userInfo.getShop(), pageSize);
     }
 
 
     @GetMapping("prosBalance/{num}")
-    public List<StoreDto> getProductsBalanceOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    public List<StoreDto> getProductsBalanceOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.getProductsBalanceOfShop(num, userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.getProductsBalanceOfShop(num, userInfo.getShop(), pageSize, desc));
     }
 
     @GetMapping("prosBalance/page")
-    public PageDto pageOfBalanceAndShop(HttpServletRequest request) {
+    public PageDto pageOfBalanceAndShop(
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            HttpServletRequest request
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.pageOfBalanceAndShop(userInfo.getShop());
+        return storeSer.pageOfBalanceAndShop(userInfo.getShop(), pageSize);
     }
 
 
     @GetMapping("sold/{num}")
-    public List<StoreDto> getProductsSoldOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    public List<StoreDto> getProductsSoldOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request
+    ) {
 
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.getProductsSoldOfShop(num, userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.getProductsSoldOfShop(num, userInfo.getShop(), pageSize, desc));
     }
 
     @GetMapping("sold/page")
-    public PageDto pageOfSoldAndShop(HttpServletRequest request) {
+    public PageDto pageOfSoldAndShop(HttpServletRequest request, @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.pageOfSoldAndShop(userInfo.getShop());
+        return storeSer.pageOfSoldAndShop(userInfo.getShop(), pageSize);
     }
 
     @GetMapping("findAllByMonth/{num}")
     private List<StoreDto> getByMonthOfShop(
             @RequestParam("month") int month,
             @RequestParam("year") int year,
-            @PathVariable("num") int num, HttpServletRequest request) {
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request) {
 
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.findByMonthAndYearOfShop(month, year, num, userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.findByMonthAndYearOfShop(month, year, num, userInfo.getShop(), pageSize, desc));
     }
 
 
@@ -92,18 +117,21 @@ public class StoreControl {
     private PageDto pageOfMonthAndShop(
             @RequestParam("month") int month,
             @RequestParam("year") int year,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.pageOfMonthAndYearAndShop(month, year, userInfo.getShop());
+        return storeSer.pageOfMonthAndYearAndShop(month, year, userInfo.getShop(), pageSize);
     }
 
     @GetMapping("findAllByProduct/{num}")
     private List<StoreDto> getAllByProductOfShop(
             @PathVariable("num") int num,
             @RequestParam("product_id") Long product_id,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
             HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.resStoreDtos(storeSer.findAllByProductOfShop(product_id, num, userInfo.getShop()));
+        return storeSer.resStoreDtos(storeSer.findAllByProductOfShop(product_id, num, userInfo.getShop(), pageSize, desc));
     }
 
 
@@ -111,22 +139,30 @@ public class StoreControl {
     private PageDto pageOfProductAndShop(
             @PathVariable("num") int num,
             @RequestParam("product_id") Long product_id,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             HttpServletRequest request) {
 
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return storeSer.pageOfProductAndShop(product_id, userInfo.getShop());
+        return storeSer.pageOfProductAndShop(product_id, userInfo.getShop(), pageSize);
     }
 
     @GetMapping("findAllByUser/{num}")
-    public List<StoreDto> findAllByUser(HttpServletRequest request, @PathVariable("num") int num) {
+    public List<StoreDto> findAllByUser(
+            HttpServletRequest request,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @PathVariable("num") int num) {
         User user = jwtService.getuser(request);
-        return storeSer.resStoreDtos(storeSer.findAllByUser(user.getId(), num));
+        return storeSer.resStoreDtos(storeSer.findAllByUser(user.getId(), num, pageSize, desc));
     }
 
     @GetMapping("findAllByUser/page")
-    public PageDto pageByUser(HttpServletRequest request, @PathVariable("num") int num) {
+    public PageDto pageByUser(
+            HttpServletRequest request,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @PathVariable("num") int num) {
         User user = jwtService.getuser(request);
-        return storeSer.pageByUser(user.getId());
+        return storeSer.pageByUser(user.getId(), pageSize);
     }
 
     @DeleteMapping("delete/{id}")

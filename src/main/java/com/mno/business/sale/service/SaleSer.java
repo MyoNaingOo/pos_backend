@@ -42,7 +42,7 @@ public class SaleSer {
 
                     ProPrice price = proPriceSer.findById(salePro.getPrice_id());
                     SaleProDto saleProDto = SaleProDto.builder()
-                            .bulk(salePro.getBulk())
+                            .bulk(salePro.getQuantity())
                             .price(price)
                             .price_id(salePro.getPrice_id())
                             .product_id(salePro.getProduct_id())
@@ -82,7 +82,7 @@ public class SaleSer {
     public void add(Sale sale) {
         saleRepo.save(sale);
         sale.getSalePros().forEach(salePro -> {
-            storeSer.updateBulkForSale(salePro.getProduct_id(), salePro.getBulk(), sale.getShop());
+            storeSer.updateBulkForSale(salePro.getProduct_id(), salePro.getQuantity(), sale.getShop());
         });
     }
 
@@ -99,17 +99,25 @@ public class SaleSer {
      * */
 
 
-
-    public List<Sale> findAllOfShop(int page_num, Shop shop) {
-        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
-        return saleRepo.findAllByShop(shop,pageable);
+    public List<Sale> findAllOfShop(int page_num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
+        return saleRepo.findAllByShop(shop, pageable);
     }
 
 
-
-    public List<Sale> findByMonthOfShop(int month, int year, int page_num,Shop shop) {
-        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
-        return saleRepo.findByMonthOfShop(month, year,shop.getId(), pageable);
+    public List<Sale> findByMonthOfShop(int month, int year, int page_num, Shop shop, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
+        return saleRepo.findByMonthOfShop(month, year, shop.getId(), pageable);
     }
 
 
@@ -120,8 +128,13 @@ public class SaleSer {
      * */
 
 
-    public List<Sale> findAll(int page_num) {
-        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
+    public List<Sale> findAll(int page_num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
         return saleRepo.findAll(pageable).getContent();
     }
 
@@ -130,47 +143,49 @@ public class SaleSer {
         Sale sale = getSale(id);
         sale.getSalePros().forEach(
                 salePro -> {
-                    storeSer.deleteFormSale(salePro.getProduct_id(), salePro.getBulk(), sale.getShop());
+                    storeSer.deleteFormSale(salePro.getProduct_id(), salePro.getQuantity(), sale.getShop());
                 });
         saleRepo.deleteById(id);
     }
 
 
-
-    public List<Sale> findByMonth(int month, int year, int page_num) {
-        Pageable pageable = PageRequest.of(page_num, 20, Sort.by("id").descending());
+    public List<Sale> findByMonth(int month, int year, int page_num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
         return saleRepo.findByMonth(month, year, pageable);
     }
 
+//page
 
 
-
-
-    public PageDto salesOfShop(Shop shop) {
+    public PageDto salesOfShop(Shop shop,int pageSize) {
         int sales = saleRepo.saleOfShop(shop.getId());
-        int page_size = sales /20;
-        return PageDto.builder().number(sales).page_size(page_size).build();
+        int page_number = sales / pageSize;
+        return PageDto.builder().number(sales).page_number(page_number).build();
     }
 
 
-    public PageDto sales() {
+    public PageDto sales(int pageSize) {
         int sales = saleRepo.sales();
-        int page_size = sales /20;
-        return PageDto.builder().number(sales).page_size(page_size).build();
+        int page_number = sales / pageSize;
+        return PageDto.builder().number(sales).page_number(page_number).build();
     }
 
 
-    public PageDto pageByMonthOfShop(int month, int year, Shop shop) {
-        int number = saleRepo.findCountByMonthOfShop(month,year,shop.getId());
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+    public PageDto pageByMonthOfShop(int month, int year, Shop shop,int pageSize) {
+        int number = saleRepo.findCountByMonthOfShop(month, year, shop.getId());
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 
 
-
-    public PageDto pageByMonth(int month, int year) {
-        int number = saleRepo.findCountByMonth(month,year);
-        int page_size = number /20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+    public PageDto pageByMonth(int month, int year,int pageSize) {
+        int number = saleRepo.findCountByMonth(month, year);
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
     }
 }

@@ -145,10 +145,10 @@ public class ProductSer {
         return productRepo.findByNameContainingAndDescriptionContaining(find, find, pageable);
     }
 
-    public PageDto findProductPage(String find) {
+    public PageDto findProductPage(String find,int pageSize) {
         int number = productRepo.pageOfNameContainingAndDescriptionContaining(find, find);
-        int page_size = number / 20;
-        return PageDto.builder().number(number).page_size(page_size).build();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
 
 
     }
@@ -168,8 +168,8 @@ public class ProductSer {
 
     public PageDto products(int pageSize) {
         int products = productRepo.productsCount();
-        int page_size = products / pageSize;
-        return PageDto.builder().number(products).page_size(page_size).build();
+        int page_number = products / pageSize;
+        return PageDto.builder().number(products).page_number(page_number).build();
 
     }
 }

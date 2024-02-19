@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class PageDto {
 
-    private int number,page_size;
+    private int number,page_number;
 
 }

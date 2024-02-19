@@ -20,7 +20,7 @@ public class StoreDto {
 
     private Long id;
     private Long product_id;
-    private int bulk;
+    private int quantity;
     private LocalDateTime time;
     private User user;
     private Shop shop;

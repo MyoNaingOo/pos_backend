@@ -29,9 +29,11 @@ public class SalePanelControl {
             @RequestParam("month") int month,
             @RequestParam("year") int year,
             @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, shop));
+        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, shop, pageSize, desc));
     }
 
 
@@ -39,25 +41,31 @@ public class SalePanelControl {
     private PageDto pageByMonthOfShop(
             @RequestParam("month") int month,
             @RequestParam("year") int year,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.pageByMonthOfShop(month, year, shop);
+        return saleSer.pageByMonthOfShop(month, year, shop, pageSize);
     }
 
 
     @GetMapping("shop/page/{num}")
     private List<SaleDto> salesOfShop(
             @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.resSaleDtos(saleSer.findAllOfShop(num, shop));
+        return saleSer.resSaleDtos(saleSer.findAllOfShop(num, shop, pageSize, desc));
     }
 
 
     @GetMapping("shop/page")
-    private PageDto pageOfShop(@RequestParam("shop_id") Long shop_id) {
+    private PageDto pageOfShop(
+            @RequestParam("shop_id") Long shop_id,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.salesOfShop(shop);
+        return saleSer.salesOfShop(shop, pageSize);
     }
 
 
@@ -67,27 +75,33 @@ public class SalePanelControl {
     private List<SaleDto> findByMonth(
             @RequestParam("month") int month,
             @RequestParam("year") int year,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
             @PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num));
+        return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num, pageSize, desc));
     }
 
 
     @GetMapping("findByMonth/page")
     private PageDto pageByMonth(
             @RequestParam("month") int month,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam("year") int year) {
-        return saleSer.pageByMonth(month, year);
+        return saleSer.pageByMonth(month, year, pageSize);
     }
 
 
     @GetMapping("page/{num}")
-    private List<SaleDto> sales(@PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.findAll(num));
+    private List<SaleDto> sales(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc) {
+        return saleSer.resSaleDtos(saleSer.findAll(num, pageSize, desc));
     }
 
     @GetMapping("page")
-    private PageDto page() {
-        return saleSer.sales();
+    private PageDto page(@RequestParam(value = "pageSize", defaultValue = "20") int pageSize) {
+        return saleSer.sales(pageSize);
     }
 
 
