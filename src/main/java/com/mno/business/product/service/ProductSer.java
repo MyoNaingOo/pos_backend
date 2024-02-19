@@ -48,8 +48,8 @@ public class ProductSer {
                 .build();
     }
 
-    public ProductDto changeProDtoOfShop(Product product,Shop shop) {
-        int balance = storeRepo.getProBalanceOfShop(product.getId(),shop.getId()).orElse(0);
+    public ProductDto changeProDtoOfShop(Product product, Shop shop) {
+        int balance = storeRepo.getProBalanceOfShop(product.getId(), shop.getId()).orElse(0);
 
         ProPrice price = proPriceSer.LtsProPrice(product.getId());
         return ProductDto.builder()
@@ -66,7 +66,6 @@ public class ProductSer {
     }
 
 
-
     public List<ProductDto> changeListProDto(List<Product> products) {
         List<ProductDto> productDtos = new ArrayList<ProductDto>();
         products.forEach(
@@ -78,11 +77,11 @@ public class ProductSer {
         return productDtos;
     }
 
-    public List<ProductDto> changeListProDtoOfShop(List<Product> products,Shop shop) {
+    public List<ProductDto> changeListProDtoOfShop(List<Product> products, Shop shop) {
         List<ProductDto> productDtos = new ArrayList<ProductDto>();
         products.forEach(
                 product -> {
-                    productDtos.add(changeProDtoOfShop(product,shop));
+                    productDtos.add(changeProDtoOfShop(product, shop));
                 }
 
         );
@@ -95,9 +94,9 @@ public class ProductSer {
 
 
     /*
-    * shop include start
-    *
-    * */
+     * shop include start
+     *
+     * */
 
 
 
@@ -107,14 +106,15 @@ public class ProductSer {
      * */
 
 
-
-
-
-    public List<Product> findAll(int num){
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<Product> findAll(int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return productRepo.findAll(pageable).getContent();
     }
-
 
 
     public Product getProduct(Long id) {
@@ -135,36 +135,40 @@ public class ProductSer {
     }
 
 
-    public List<ProductDto> findByName(String name, int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        List<Product> products = productRepo.findByNameContaining(name, pageable);
-
-        return changeListProDto(products);
+    public List<Product> findProduct(int num, String find, int pageSize, boolean desc) {
+        Pageable pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, 20, Sort.by("id"));
+        }
+        return productRepo.findByNameContainingAndDescriptionContaining(find, find, pageable);
     }
 
-    public List<Product> findProduct(int num, String find){
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        return productRepo.findByNameContainingAndDescriptionContaining(find,find,pageable);
-    }
-    public PageDto findProductPage(String find){
-        int number = productRepo.pageOfNameContainingAndDescriptionContaining(find,find);
-        int page_size = number /20;
+    public PageDto findProductPage(String find) {
+        int number = productRepo.pageOfNameContainingAndDescriptionContaining(find, find);
+        int page_size = number / 20;
         return PageDto.builder().number(number).page_size(page_size).build();
 
 
     }
 
-    public List<ProductDto> findByMonth(int month,int year,int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
-        List<Product> products = productRepo.findByMonth(month,year,pageable);
+    public List<ProductDto> findByMonth(int month, int year, int num, int pageSize, boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
+        List<Product> products = productRepo.findByMonth(month, year, pageable);
         return changeListProDto(products);
 
     }
 
 
-    public PageDto products() {
+    public PageDto products(int pageSize) {
         int products = productRepo.productsCount();
-        int page_size = products / 20;
+        int page_size = products / pageSize;
         return PageDto.builder().number(products).page_size(page_size).build();
 
     }

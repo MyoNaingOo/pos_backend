@@ -6,8 +6,6 @@ import com.mno.business.Store.service.StoreSer;
 import com.mno.business.helper.PageDto;
 import com.mno.business.shop.Shop;
 import com.mno.business.shop.ShopSer;
-import com.mno.business.user.entity.UserInfo;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

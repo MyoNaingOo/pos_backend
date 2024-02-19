@@ -50,9 +50,14 @@ public class ProductControl {
      * */
 
     @GetMapping("shop/page/{num}")
-    private List<ProductDto> productsOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    private List<ProductDto> productsOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return productSer.changeListProDtoOfShop(productSer.findAll(num), userInfo.getShop());
+        return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc), userInfo.getShop());
     }
 
     @GetMapping("shop/pid/{id}")
@@ -71,9 +76,14 @@ public class ProductControl {
     }
 
     @GetMapping("shop/find/{value}/{num}")
-    private List<ProductDto> findProductOfShop(@PathVariable("value") String value, @PathVariable("num") int num, HttpServletRequest request) {
+    private List<ProductDto> findProductOfShop(
+            @PathVariable("value") String value,
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return productSer.changeListProDtoOfShop(productSer.findProduct(num, value), userInfo.getShop());
+        return productSer.changeListProDtoOfShop(productSer.findProduct(num, value,pageSize,desc), userInfo.getShop());
     }
 
     @GetMapping("shop/find/{value}/page")
@@ -99,10 +109,11 @@ public class ProductControl {
     }
 
 
-
     @GetMapping("page")
-    private PageDto products(){
-        return productSer.products();
+    private PageDto products(
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
+        return productSer.products(pageSize);
     }
 
 }
