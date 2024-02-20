@@ -205,10 +205,10 @@ public class StoreSer {
         if (available != null) {
             int fistStore = available.getQuantity() - available.getUpdate_quantity();
             if (fistStore < updateBulk) {
-                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_quantity() + fistStore);
+                storeRepo.changeUpdateQuantity(available.getId(), available.getUpdate_quantity() + fistStore);
                 updateBulkForSale(product_id, updateBulk - fistStore, shop);
             } else {
-                storeRepo.changeUpdateBulk(available.getId(), available.getUpdate_quantity() + updateBulk);
+                storeRepo.changeUpdateQuantity(available.getId(), available.getUpdate_quantity() + updateBulk);
             }
         }
     }
@@ -220,11 +220,11 @@ public class StoreSer {
 
             if (delete_bulk > available.getUpdate_quantity()) {
                 int secondStore = delete_bulk - available.getUpdate_quantity();
-                storeRepo.changeUpdateBulk(available.getId(), 0);
+                storeRepo.changeUpdateQuantity(available.getId(), 0);
                 deleteFormSale(product_id, secondStore, shop);
             } else {
                 int max_delete = available.getUpdate_quantity() - delete_bulk;
-                storeRepo.changeUpdateBulk(available.getId(), max_delete);
+                storeRepo.changeUpdateQuantity(available.getId(), max_delete);
             }
         }
     }

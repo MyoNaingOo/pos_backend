@@ -34,35 +34,35 @@ public interface StoreRepo extends JpaRepository<Store, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE store s SET s.update_bulk = ?2 WHERE s.id = ?1 ", nativeQuery = true)
-    void changeUpdateBulk(Long id, int update_bulk);
+    @Query(value = "UPDATE store s SET s.update_quantity = ?2 WHERE s.id = ?1 ", nativeQuery = true)
+    void changeUpdateQuantity(Long id, int update_quantity);
 
     List<Store> findAllByUser(User user, Pageable pageable);
 
-    @Query(value = "SELECT * FROM store WHERE product_id=?1 AND  shop_id= ?2 AND  time= (select MIN(time) from store where product_id=?1 and bulk>update_bulk and shop_id= ?2)", nativeQuery = true)
+    @Query(value = "SELECT * FROM store WHERE product_id=?1 AND  shop_id= ?2 AND  time= (select MIN(time) from store where product_id=?1 and quantity>update_quantity and shop_id= ?2)", nativeQuery = true)
     Optional<Store> findAvailable(Long product_id,Long shop_id);
 
-    @Query(value = " SELECT * FROM store WHERE product_id=?1 AND shop_id= ?2 AND  time= (select MAX(time) from store where product_id=?1 and bulk>=update_bulk and update_bulk!=0 and shop_id= ?2 )", nativeQuery = true)
+    @Query(value = " SELECT * FROM store WHERE product_id=?1 AND shop_id= ?2 AND  time= (select MAX(time) from store where product_id=?1 and quantity>=update_quantity and update_quantity!=0 and shop_id= ?2 )", nativeQuery = true)
     Optional<Store> findNowUseStatusByProduct(Long product_id,Long shop_id);
 
 
-    @Query(value = "SELECT SUM(bulk)-SUM(update_bulk) FROM store WHERE product_id=?1 ORDER BY id DESC", nativeQuery = true)
+    @Query(value = "SELECT SUM(quantity)-SUM(update_quantity) FROM store WHERE product_id=?1 ORDER BY id DESC", nativeQuery = true)
     Optional<Integer> getProBalance(Long product_id);
 
-    @Query(value = "SELECT SUM(bulk)-SUM(update_bulk) FROM store WHERE product_id=?1 AND shop_id = ?2 ORDER BY id DESC", nativeQuery = true)
+    @Query(value = "SELECT SUM(quantity)-SUM(update_quantity) FROM store WHERE product_id=?1 AND shop_id = ?2 ORDER BY id DESC", nativeQuery = true)
     Optional<Integer> getProBalanceOfShop(Long product_id,Long shop_id);
 
-    @Query(value = "SELECT * FROM store WHERE bulk!=update_bulk", nativeQuery = true)
+    @Query(value = "SELECT * FROM store WHERE quantity!=update_quantity", nativeQuery = true)
     List<Store> getProductsBalance(Pageable pageable);
 
 
-    @Query(value = "SELECT * FROM store WHERE bulk!=update_bulk AND shop_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM store WHERE quantity!=update_quantity AND shop_id = ?1", nativeQuery = true)
     List<Store> getProductsBalanceOfShop(Long shop_id,Pageable pageable);
 
-    @Query(value = "SELECT * FROM store WHERE bulk=update_bulk", nativeQuery = true)
+    @Query(value = "SELECT * FROM store WHERE quantity=update_quantity", nativeQuery = true)
     List<Store> getProductsSold(Pageable pageable);
 
-    @Query(value = "SELECT * FROM store WHERE bulk=update_bulk AND shop_id= ?1 ", nativeQuery = true)
+    @Query(value = "SELECT * FROM store WHERE quantity=update_quantity AND shop_id= ?1 ", nativeQuery = true)
     List<Store> getProductsSoldOfShop(Long shop_id,Pageable pageable);
 
     @Transactional
@@ -82,17 +82,17 @@ public interface StoreRepo extends JpaRepository<Store, Long> {
     int storesOfShop(Long id);
 
 
-    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk!=update_bulk", nativeQuery = true)
+    @Query(value = "SELECT COUNT(id) FROM store WHERE quantity!=update_quantity", nativeQuery = true)
     int pageOfBalance();
 
 
-    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk!=update_bulk AND shop_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(id) FROM store WHERE quantity!=update_quantity AND shop_id = ?1", nativeQuery = true)
     int pageOfBalanceAndShop(Long shop_id);
 
-    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk=update_bulk", nativeQuery = true)
+    @Query(value = "SELECT COUNT(id) FROM store WHERE quantity=update_quantity", nativeQuery = true)
     int pageOfSold();
 
-    @Query(value = "SELECT COUNT(id) FROM store WHERE bulk=update_bulk AND shop_id= ?1 ", nativeQuery = true)
+    @Query(value = "SELECT COUNT(id) FROM store WHERE quantity=update_quantity AND shop_id= ?1 ", nativeQuery = true)
     int pageOfSoldAndShop(Long shop_id);
 
 
