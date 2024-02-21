@@ -71,26 +71,26 @@ public class UserController {
         return userService.userInfoMapper(userInfo);
     }
 
-    @PostMapping("change/image")
+    @PutMapping("change/image")
     public void changeImage(@RequestBody UserDto user, HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         userService.changeImage(userInfo.getId(), user.getUser_img());
     }
 
-    @PostMapping("change/password")
+    @PutMapping("change/password")
     public void changePass(@RequestBody UserDto user, HttpServletRequest request) {
         User userjwt = jwtService.getuser(request);
         userService.changePass(userjwt.getId(), user.getPassword());
     }
 
-    @PostMapping("change/name")
+    @PutMapping("change/name")
     public void changeName(@RequestBody UserDto user, HttpServletRequest request) {
         User userjwt = jwtService.getuser(request);
         userService.changeName(userjwt.getId(), user.getName());
     }
 
-    @PostMapping("change/shop")
-    public void changeShop(@RequestBody UserDto userDto, @RequestParam("new_user") boolean new_user, HttpServletRequest request) {
+    @PutMapping("change/shop")
+    public void changeShop(@RequestBody UserDto userDto, @RequestParam(value = "new_user",required = false,defaultValue = "false") boolean new_user, HttpServletRequest request) {
 
         if (!new_user) {
             UserInfo userInfo = jwtService.getUserInfo(request);

@@ -30,6 +30,7 @@ public class ProductControl {
         Product product = Product.builder()
                 .name(productDto.getName())
                 .img(productDto.getImg())
+                .code(productDto.getCode())
                 .description(productDto.getDescription())
                 .user(user)
                 .time(LocalDateTime.now())
