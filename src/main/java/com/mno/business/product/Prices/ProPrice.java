@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class ProPrice {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Long id;
 
     @ManyToOne
@@ -25,6 +25,7 @@ public class ProPrice {
 
     private int org_price;
     private int promo_price;
+    private int purchase_price;
     private LocalDate date;
 
 
