@@ -36,6 +36,8 @@ public class Sale {
     @JoinColumn(name = "salepro_id")
     private List<SalePro> salePros;
 
+    private boolean perishable;
+
     private LocalDateTime time;
 
 

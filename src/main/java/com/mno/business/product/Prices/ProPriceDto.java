@@ -23,6 +23,7 @@ public class ProPriceDto {
     private Long product_id;
     private int org_price;
     private int promo_price;
+    private int purchase_price;
     private LocalDate date;
     private ProductDto productDto;
 

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,9 +32,10 @@ public class SalePanelControl {
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, shop, pageSize, desc));
+        return saleSer.resSaleDtos(saleSer.findByMonthOfShop(month, year, num, shop, pageSize, desc, perishable.toLowerCase()));
     }
 
 
@@ -42,9 +44,10 @@ public class SalePanelControl {
             @RequestParam("month") int month,
             @RequestParam("year") int year,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.pageByMonthOfShop(month, year, shop, pageSize);
+        return saleSer.pageByMonthOfShop(month, year, shop, pageSize, perishable.toLowerCase());
     }
 
 
@@ -53,19 +56,21 @@ public class SalePanelControl {
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.resSaleDtos(saleSer.findAllOfShop(num, shop, pageSize, desc));
+        return saleSer.resSaleDtos(saleSer.findAllOfShop(num, shop, pageSize, desc, perishable.toLowerCase()));
     }
 
 
     @GetMapping("shop/page")
     private PageDto pageOfShop(
             @RequestParam("shop_id") Long shop_id,
-            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable
     ) {
         Shop shop = shopSer.shop(shop_id);
-        return saleSer.salesOfShop(shop, pageSize);
+        return saleSer.salesOfShop(shop, pageSize, perishable.toLowerCase(Locale.ROOT));
     }
 
 
@@ -77,8 +82,9 @@ public class SalePanelControl {
             @RequestParam("year") int year,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @PathVariable("num") int num) {
-        return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num, pageSize, desc));
+        return saleSer.resSaleDtos(saleSer.findByMonth(month, year, num, pageSize, desc, perishable));
     }
 
 
@@ -86,8 +92,9 @@ public class SalePanelControl {
     private PageDto pageByMonth(
             @RequestParam("month") int month,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @RequestParam("year") int year) {
-        return saleSer.pageByMonth(month, year, pageSize);
+        return saleSer.pageByMonth(month, year, pageSize, perishable);
     }
 
 
@@ -95,13 +102,17 @@ public class SalePanelControl {
     private List<SaleDto> sales(
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc) {
-        return saleSer.resSaleDtos(saleSer.findAll(num, pageSize, desc));
+        return saleSer.resSaleDtos(saleSer.findAll(num, pageSize, desc, perishable));
     }
 
     @GetMapping("page")
-    private PageDto page(@RequestParam(value = "pageSize", defaultValue = "20") int pageSize) {
-        return saleSer.sales(pageSize);
+    private PageDto page(
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "perishable", defaultValue = "all", required = false) String perishable
+    ) {
+        return saleSer.sales(pageSize, perishable);
     }
 
 

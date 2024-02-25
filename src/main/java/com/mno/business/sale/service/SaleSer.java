@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -99,25 +100,36 @@ public class SaleSer {
      * */
 
 
-    public List<Sale> findAllOfShop(int page_num, Shop shop, int pageSize, boolean desc) {
+    public List<Sale> findAllOfShop(int page_num, Shop shop, int pageSize, boolean desc, String perishable) {
         PageRequest pageable;
         if (desc) {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
         } else {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
         }
-        return saleRepo.findAllByShop(shop, pageable);
+
+        return switch (perishable) {
+            case "true" -> saleRepo.findAllByShopAndPerishable(shop, true, pageable);
+            case "false" -> saleRepo.findAllByShopAndPerishable(shop, false, pageable);
+            default -> saleRepo.findAllByShop(shop, pageable);
+        };
     }
 
 
-    public List<Sale> findByMonthOfShop(int month, int year, int page_num, Shop shop, int pageSize, boolean desc) {
+    public List<Sale> findByMonthOfShop(int month, int year, int page_num, Shop shop, int pageSize, boolean desc, String perishable) {
         PageRequest pageable;
         if (desc) {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
         } else {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
         }
-        return saleRepo.findByMonthOfShop(month, year, shop.getId(), pageable);
+
+        return switch (perishable) {
+            case "true" -> saleRepo.findByMonthOfShopAndPerishable(month, year, shop.getId(), true, pageable);
+            case "false" -> saleRepo.findByMonthOfShopAndPerishable(month, year, shop.getId(), false, pageable);
+            default -> saleRepo.findByMonthOfShop(month, year, shop.getId(), pageable);
+        };
+
     }
 
 
@@ -128,14 +140,20 @@ public class SaleSer {
      * */
 
 
-    public List<Sale> findAll(int page_num, int pageSize, boolean desc) {
+    public List<Sale> findAll(int page_num, int pageSize, boolean desc, String perishable) {
         PageRequest pageable;
         if (desc) {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
         } else {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
         }
-        return saleRepo.findAll(pageable).getContent();
+
+
+        return switch (perishable) {
+            case "true" -> saleRepo.findAllByPerishable(true, pageable);
+            case "false" -> saleRepo.findAllByPerishable(false, pageable);
+            default -> saleRepo.findAll(pageable).getContent();
+        };
     }
 
     @Async
@@ -149,43 +167,119 @@ public class SaleSer {
     }
 
 
-    public List<Sale> findByMonth(int month, int year, int page_num, int pageSize, boolean desc) {
+    public List<Sale> findByMonth(int month, int year, int page_num, int pageSize, boolean desc, String perishable) {
         PageRequest pageable;
         if (desc) {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
         } else {
             pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
         }
-        return saleRepo.findByMonth(month, year, pageable);
+
+        return switch (perishable) {
+            case "true" -> saleRepo.findByMonthAndPerishable(month, year, true, pageable);
+            case "false" -> saleRepo.findByMonthAndPerishable(month, year, false, pageable);
+            default -> saleRepo.findByMonth(month, year, pageable);
+        };
+
+
     }
 
 //page
 
 
-    public PageDto salesOfShop(Shop shop,int pageSize) {
-        int sales = saleRepo.saleOfShop(shop.getId());
-        int page_number = sales / pageSize;
-        return PageDto.builder().number(sales).page_number(page_number).build();
+    public PageDto salesOfShop(Shop shop, int pageSize, String perishable) {
+        int number;
+        switch (perishable) {
+            case "true" -> {
+                number = saleRepo.saleOfShopAndPerishable(shop.getId(), true);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            case "false" -> {
+                number = saleRepo.saleOfShopAndPerishable(shop.getId(), false);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            default -> {
+                number = saleRepo.saleOfShop(shop.getId());
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+        }
+
     }
 
 
-    public PageDto sales(int pageSize) {
-        int sales = saleRepo.sales();
-        int page_number = sales / pageSize;
-        return PageDto.builder().number(sales).page_number(page_number).build();
+    public PageDto sales(int pageSize, String perishable) {
+        int number;
+        switch (perishable) {
+            case "true" -> {
+                number = saleRepo.salesByPerishable(true);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            case "false" -> {
+                number = saleRepo.salesByPerishable(false);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            default -> {
+                number = saleRepo.sales();
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+        }
+
     }
 
 
-    public PageDto pageByMonthOfShop(int month, int year, Shop shop,int pageSize) {
-        int number = saleRepo.findCountByMonthOfShop(month, year, shop.getId());
-        int page_number = number / pageSize;
-        return PageDto.builder().number(number).page_number(page_number).build();
+    public PageDto pageByMonthOfShop(int month, int year, Shop shop, int pageSize, String perishable) {
+
+        int number;
+
+        switch (perishable) {
+            case "true" -> {
+                number = saleRepo.findCountByMonthOfShopAndPerishable(month, year, shop.getId(), true);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            case "false" -> {
+                number = saleRepo.findCountByMonthOfShopAndPerishable(month, year, shop.getId(), false);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            default -> {
+                number = saleRepo.findCountByMonthOfShop(month, year, shop.getId());
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+        }
+
     }
 
 
-    public PageDto pageByMonth(int month, int year,int pageSize) {
-        int number = saleRepo.findCountByMonth(month, year);
-        int page_number = number / pageSize;
-        return PageDto.builder().number(number).page_number(page_number).build();
+    public PageDto pageByMonth(int month, int year, int pageSize, String perishable) {
+        int number;
+        switch (perishable) {
+            case "true" -> {
+                number = saleRepo.findCountByMonthAndPerishable(month, year, true);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            case "false" -> {
+                number = saleRepo.findCountByMonthAndPerishable(month, year, false);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+            default -> {
+                number = saleRepo.findCountByMonth(month, year);
+                int page_number = number / pageSize;
+                return PageDto.builder().number(number).page_number(page_number).build();
+            }
+        }
+
+
     }
+
+
 }

@@ -51,6 +51,7 @@ public class ProPriceSer {
                 .productDto(productDto)
                 .org_price(proPrice.getOrg_price())
                 .promo_price(proPrice.getPromo_price())
+                .purchase_price(proPrice.getPurchase_price())
                 .date(proPrice.getDate())
                 .build();
 
@@ -87,6 +88,7 @@ public class ProPriceSer {
                     .id(proPrice.getId())
                     .product(product)
                     .promo_price(proPrice.getPromo_price())
+                    .purchase_price(proPrice.getPurchase_price())
                     .org_price(proPrice.getOrg_price())
                     .date(proPrice.getDate())
                     .build();

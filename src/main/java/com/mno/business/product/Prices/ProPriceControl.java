@@ -23,6 +23,7 @@ public class ProPriceControl {
         ProPrice proPrice = ProPrice.builder()
                 .date(LocalDate.now())
                 .product(product)
+                .purchase_price(proPriceDto.getPurchase_price())
                 .org_price(proPriceDto.getOrg_price())
                 .promo_price(proPriceDto.getPromo_price())
                 .build();
