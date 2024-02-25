@@ -25,7 +25,9 @@ public class StoreControl {
 
 
     @PostMapping("add")
-    private void addStore(@RequestBody StoreDto storeDto, HttpServletRequest request) {
+    private void addStore(
+            @RequestBody StoreDto storeDto,
+            HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         storeSer.addStore(userInfo, storeDto);
     }

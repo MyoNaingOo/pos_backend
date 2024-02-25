@@ -43,7 +43,7 @@ public class SaleSer {
 
                     ProPrice price = proPriceSer.findById(salePro.getPrice_id());
                     SaleProDto saleProDto = SaleProDto.builder()
-                            .bulk(salePro.getQuantity())
+                            .quantity(salePro.getQuantity())
                             .price(price)
                             .price_id(salePro.getPrice_id())
                             .product_id(salePro.getProduct_id())

@@ -25,8 +25,7 @@ public class StoreDto {
     private User user;
     private Shop shop;
     private ProductDto product;
-    private int update_bulk;
-    private boolean user_shop;
+    private int update_quantity;
 
 
 }

@@ -38,8 +38,7 @@ public class StoreSer {
                 .shop(store.getShop())
                 .product(productSer.changeProDto(store.getProduct()))
                 .quantity(store.getQuantity())
-                .user_shop(true)
-                .update_bulk(store.getUpdate_quantity())
+                .update_quantity(store.getUpdate_quantity())
                 .user(userService.responeUser(store.getUser()))
                 .time(store.getTime())
                 .build();
@@ -59,18 +58,6 @@ public class StoreSer {
 
     public void addStore(UserInfo userInfo, StoreDto storeDto) {
         Product product = productSer.getProduct(storeDto.getProduct_id());
-        if (!storeDto.isUser_shop()) {
-            Store store = Store.builder()
-                    .product(product)
-                    .user(userInfo.getUser())
-                    .shop(storeDto.getShop())
-                    .quantity(storeDto.getQuantity())
-                    .update_quantity(0)
-                    .time(LocalDateTime.now())
-                    .build();
-            storeRepo.save(store);
-
-        } else {
             Store store = Store.builder()
                     .product(product)
                     .user(userInfo.getUser())
@@ -80,7 +67,6 @@ public class StoreSer {
                     .time(LocalDateTime.now())
                     .build();
             storeRepo.save(store);
-        }
     }
 
 

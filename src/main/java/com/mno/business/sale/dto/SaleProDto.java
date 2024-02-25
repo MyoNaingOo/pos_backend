@@ -18,5 +18,5 @@ public class SaleProDto {
     private Long price_id;
     private ProductDto product;
     private ProPrice price;
-    private int bulk;
+    private int quantity;
 }

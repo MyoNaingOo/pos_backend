@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v2/shop/sale/")
+@RequestMapping("api/v2/shop/sale")
 public class SaleControl {
 
     private final SaleSer saleSer;
@@ -37,7 +37,7 @@ public class SaleControl {
                     SalePro salePro = SalePro.builder()
                             .product_id(saleProDto.getProduct_id())
                             .price_id(proPrice_id)
-                            .quantity(saleProDto.getBulk())
+                            .quantity(saleProDto.getQuantity())
                             .build();
                     salePros.add(salePro);
                 }
