@@ -54,13 +54,13 @@ public class Configer {
                                             "/api/otp/**",
                                             "/api/v2/shop/**"
                                     ).permitAll()
-                                    .requestMatchers("/api/v2/user/delete").authenticated()
+                                    .requestMatchers("/api/v2/user/**").authenticated()
                                     .requestMatchers("/api/v2/panel/user/**").hasAnyAuthority(Role.USERMANAGER.name(), Role.CEO.name(), Role.OWNER.name())
-                                    .requestMatchers("/api/v2/shop/sale").hasAnyAuthority(Role.SALEMANAGER.name(), Role.SALEWORKER.name(), Role.CEO.name(), Role.OWNER.name())
-                                    .requestMatchers("/api/v2/panel/sale").hasAnyAuthority(Role.SALEMANAGER.name(), Role.CEO.name(), Role.OWNER.name())
-                                    .requestMatchers("/api/v2/shop/store").hasAnyAuthority(Role.STOREMANAGER.name(), Role.STOREWORKER.name(), Role.CEO.name(), Role.OWNER.name())
-                                    .requestMatchers("/api/v2/panel/store").hasAnyAuthority(Role.STOREMANAGER.name(), Role.CEO.name(), Role.OWNER.name())
-                                    .requestMatchers("/api/v2/shop/product")
+                                    .requestMatchers("/api/v2/shop/sale/**").hasAnyAuthority(Role.SALEMANAGER.name(), Role.SALEWORKER.name(), Role.CEO.name(), Role.OWNER.name())
+                                    .requestMatchers("/api/v2/panel/sale/**").hasAnyAuthority(Role.SALEMANAGER.name(), Role.CEO.name(), Role.OWNER.name())
+                                    .requestMatchers("/api/v2/shop/store/**").hasAnyAuthority(Role.STOREMANAGER.name(), Role.STOREWORKER.name(), Role.CEO.name(), Role.OWNER.name())
+                                    .requestMatchers("/api/v2/panel/store/**").hasAnyAuthority(Role.STOREMANAGER.name(), Role.CEO.name(), Role.OWNER.name())
+                                    .requestMatchers("/api/v2/shop/product/**")
                                     .hasAnyAuthority(
                                             Role.STOREMANAGER.name(),
                                             Role.STOREWORKER.name(),
@@ -70,7 +70,7 @@ public class Configer {
                                             Role.USER.name(),
                                             Role.OWNER.name()
                                     )
-                                    .requestMatchers("api/v2/panel/product").hasAnyAuthority(
+                                    .requestMatchers("api/v2/panel/product/**").hasAnyAuthority(
                                             Role.STOREMANAGER.name(),
                                             Role.SALEMANAGER.name(),
                                             Role.CEO.name(),
