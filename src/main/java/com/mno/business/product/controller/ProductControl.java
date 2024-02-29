@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v2/product")
+@RequestMapping("api/v2/shop/product")
 @RequiredArgsConstructor
 public class ProductControl {
 
@@ -40,9 +40,10 @@ public class ProductControl {
 
 
     @GetMapping("{id}")
-    public ProductDto getProduct(@PathVariable("id") Long id) {
+    public ProductDto getProduct(@PathVariable("id") Long id,HttpServletRequest request) {
         Product product = productSer.getProduct(id);
-        return productSer.changeProDto(product);
+        UserInfo userInfo = jwtService.getUserInfo(request);
+        return productSer.changeProDtoOfShop(product,userInfo.getShop());
     }
 
     /*
