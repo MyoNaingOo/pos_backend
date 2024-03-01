@@ -39,12 +39,6 @@ public class ProductControl {
     }
 
 
-    @GetMapping("{id}")
-    public ProductDto getProduct(@PathVariable("id") Long id,HttpServletRequest request) {
-        Product product = productSer.getProduct(id);
-        UserInfo userInfo = jwtService.getUserInfo(request);
-        return productSer.changeProDtoOfShop(product,userInfo.getShop());
-    }
 
     /*
      *shop api start
