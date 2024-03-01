@@ -75,6 +75,7 @@ public class Configer {
                                             Role.SALEMANAGER.name(),
                                             Role.CEO.name(),
                                             Role.OWNER.name())
+                                    .requestMatchers("/api/v2/panel/user/setCEO").hasAuthority(Role.OWNER.name())
                                     .requestMatchers("/**").fullyAuthenticated()
                                     .anyRequest().authenticated();
 
