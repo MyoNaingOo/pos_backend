@@ -51,7 +51,7 @@ public class ProductControl {
      *
      * */
 
-    @GetMapping("shop/page/{num}")
+    @GetMapping("page/{num}")
     private List<ProductDto> productsOfShop(
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
@@ -62,7 +62,7 @@ public class ProductControl {
         return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc), userInfo.getShop());
     }
 
-    @GetMapping("shop/pid/{id}")
+    @GetMapping("pid/{id}")
     public ProductDto getProductOfShop(@PathVariable("id") Long id, HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         Product product = productSer.getProduct(id);
@@ -70,14 +70,14 @@ public class ProductControl {
     }
 
 
-    @GetMapping("shop/find/code/{code}")
+    @GetMapping("find/code/{code}")
     public ProductDto getProductByCodeOfShop(@PathVariable("code") String code, HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
         Product product = productSer.getProductByCode(code);
         return productSer.changeProDtoOfShop(product, userInfo.getShop());
     }
 
-    @GetMapping("shop/find/{value}/{num}")
+    @GetMapping("find/{value}/{num}")
     private List<ProductDto> findProductOfShop(
             @PathVariable("value") String value,
             @PathVariable("num") int num,
@@ -88,7 +88,7 @@ public class ProductControl {
         return productSer.changeListProDtoOfShop(productSer.findProduct(num, value,pageSize,desc), userInfo.getShop());
     }
 
-    @GetMapping("shop/find/{value}/page")
+    @GetMapping("find/{value}/page")
     private PageDto pageOfFindProductOfShop(
             @PathVariable("value") String value,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
