@@ -39,12 +39,6 @@ public class ProductControl {
     }
 
 
-
-    /*
-     *shop api start
-     *
-     * */
-
     @GetMapping("page/{num}")
     private List<ProductDto> productsOfShop(
             @PathVariable("num") int num,
@@ -89,17 +83,6 @@ public class ProductControl {
             HttpServletRequest request) {
         return productSer.findProductPage(value,pageSize);
 
-    }
-
-    /*
-     *shop api end
-     *
-     * */
-
-    @GetMapping("find/code/{code}")
-    public ProductDto getProductByCode(@PathVariable("code") String code) {
-        Product product = productSer.getProductByCode(code);
-        return productSer.changeProDto(product);
     }
 
     @DeleteMapping("delete/{id}")

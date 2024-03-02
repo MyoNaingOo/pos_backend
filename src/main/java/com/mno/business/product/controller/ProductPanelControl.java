@@ -6,6 +6,8 @@ import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
 import com.mno.business.shop.Shop;
 import com.mno.business.shop.ShopSer;
+import com.mno.business.user.entity.UserInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +63,19 @@ public class ProductPanelControl {
     }
 
 //    shop end
+
+    @GetMapping("pid/{id}")
+    public ProductDto getProduct(@PathVariable("id") Long id) {
+        Product product = productSer.getProduct(id);
+        return productSer.changeProDto(product);
+    }
+
+
+    @GetMapping("find/code/{code}")
+    public ProductDto getProductByCode(@PathVariable("code") String code) {
+        Product product = productSer.getProductByCode(code);
+        return productSer.changeProDto(product);
+    }
 
     @GetMapping("findByMonth/{num}")
     public List<ProductDto> findByMonth(
