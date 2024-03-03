@@ -27,11 +27,6 @@ public class UserController {
         userService.deleteUser(user.getId());
     }
 
-    @GetMapping("userid/{id}")
-    public UserInfo getUser(@PathVariable("id") Long id) {
-        UserInfo userInfo = userService.getuserInfo(id);
-        return userService.userInfoMapper(userInfo);
-    }
 
     @GetMapping("shop/page/{num}")
     public List<UserInfo> getUsernameOfShop(

@@ -131,7 +131,9 @@ Otp response obj
     "user_img": null,
     "password": "***",
     "gmail": "***@gmail",
-    "address": "**",
+    "shop": {
+      ...
+    },
     "role": "ADMIN",
     "enabled": true,
     "accountNonLocked": true,
@@ -165,73 +167,91 @@ More details example in angular : https://github.com/MyoNaingOo/shopAng/blob/mas
 
 <h3 id="shop">Shop and User Shop</h3>
 Add shop information  of user  : http://localhost:8080/api/v2/user/change/shop?new_user=true (new user true for now register user)<br>
+
+```json
+{
+ "shop": {
+  "id": **
+ }
+}
+
+```
+
 Shop APIs <br>
 Shops  : http://localhost:8080/api/v2/shop/add<br>
 Shops  : http://localhost:8080/api/v2/shop/shops<br>
 get Shop  : http://localhost:8080/api/v2/shop/${id} (id = shop id )<br>
 update  : http://localhost:8080/api/v2/shop/update/${id} (id = shop id )<br>
 delete  : http://localhost:8080/api/v2/shop/delete/${id} (id = shop id )<br>
+response one shop obj:
+```json
+ {
+  "name": "",
+  "region": "",
+  "town": ""
+ }
+```
 
+<h3 id="custom_page">Customize pagination</h3> <br>
+pagination number start is zero (0) <br>
+ http://localhost:8080/api/***/***/{num}?pageSize=${30}&desc=${true} (desc: boolean = descending {true or false}  ) <br>
 
-<h3 id="custom_page">Customize pagination</h3>
-
+ http://localhost:8080/api/***/***/page <br>
+response :
+```json
+{
+  "number" : 20,  //result number
+  "page_number": 1  // pagination action number 
+}
+```
 
 
 <h3 id="other_user_api">Other Api for User</h3>
 <p style="color:#f80" >It has Logined status</p>
 
+for worker users
 Get User info    : http://localhost:8080/api/v2/user/user (Logined user information)
-
+Get User info include shop   : http://localhost:8080/api/v2/user/userInfo (Logined user information)
 Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
 Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
 Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
+Get Users info : http://localhost:8080/api/v2/user/shop/page/${num} <br>
 
-Get Users info : http://localhost:8080/api/v2/user/users/page/${page_number} <br>
-page_number start = 0 // number zero
+Logout Acc : http://localhost:8080/api/auth/logout GET Method<br>
+Delete My Acc : http://localhost:8080/api/v1/user/delete <br>
 
-
-response obj :
+response obj in one user information :
 
 ```json
 {
-  "id": 1,
-  "name": "myo",
-  "user_img": null,
-  "password": null,
-  "gmail": "myo@gmail",
-  "address": null,
-  "role": "USER",
-  "enabled": true,
-  "username": "myo@gmail",
-  "authorities": [
-    {
-      "authority": "USER"
-    }
-  ],
-  "accountNonExpired": true,
-  "accountNonLocked": true,
-  "credentialsNonExpired": true
+ "id": 1,
+ "name": "myo",
+ "user_img": null,
+ "password": null,
+ "gmail": "myo@gmail",
+ "shop": {
+  "name": "",
+  "region": "",
+  "town": ""
+ },
+ "role": "USER",
+ "enabled": true,
+ "username": "myo@gmail",
+ "authorities": [
+  {
+   "authority": "USER"
+  }
+ ],
+ "accountNonExpired": true,
+ "accountNonLocked": true,
+ "credentialsNonExpired": true
 }
 ```
-
-Logout Acc : http://localhost:8080/api/logout GET Method
-
-Delete My Acc : http://localhost:8080/api/v1/user/delete <br>
-
-Delete User : http://localhost:8080/api/v1/user/delete/${id}
-(need ADMIN Role)
-
 
 <p style="color:#ff5" >
 Deleted user account doing. other this account has been sale,store and product date is null.
 </p>
 <br>
-
-
-
-<hr>
-
-
 Using user obj request for this
 
 ```json
@@ -239,17 +259,19 @@ Using user obj request for this
   "id": 1,
   //id can't change
   "name": "**",
-  "user_img": null,
+  "user_img": "img",
   "password": null,
   "gmail": "***@gmail",
   //gmail can't change
-  "address": "**",
+  "shop": {
+    ...
+  },
   "role": "USER"
 }
 ```
 
 Image update: http://localhost:8080/api/v1/user/image
-POST request :
+PUT request :
 
 ```json
 {
@@ -259,7 +281,7 @@ POST request :
 ```
 
 Name update: http://localhost:8080/api/v1/user/changeName
-POST request :
+PUT request :
 
 ```json
 {
@@ -268,7 +290,7 @@ POST request :
 ```
 
 password update: http://localhost:8080/api/v1/user/changePass
-POST request :
+PUT request :
 
 ```json
 {
@@ -276,14 +298,23 @@ POST request :
 }
 ```
 
-Address update: http://localhost:8080/api/v1/user/changeAddress
-POST request :
+Address update: http://localhost:8080/api/v1/user/change/shop
+PUT request :
 
 ```json
 {
   "address": "***"
 }
 ```
+
+User Manger control panel
+Get User info    : http://localhost:8080/api/v2/user/user (Logined user information)
+Get User info include shop   : http://localhost:8080/api/v2/user/userInfo (Logined user information)
+Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
+Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
+Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
+Get Users info : http://localhost:8080/api/v2/user/shop/page/${num} <br>
+
 
 
 <h4 id="img_crud" >Image CRUD</h4>

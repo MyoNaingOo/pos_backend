@@ -26,6 +26,14 @@ public class UserPanelControl {
     private final ShopSer shopSer;
     private final JwtService jwtService;
 
+
+    @GetMapping("userid/{id}")
+    public UserInfo getUser(@PathVariable("id") Long id) {
+        UserInfo userInfo = userService.getuserInfo(id);
+        return userService.userInfoMapper(userInfo);
+    }
+
+
     @GetMapping("page")
     private PageDto page() {
         return userService.users();
