@@ -34,7 +34,6 @@ public class Configer {
     private String frontend;
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(
@@ -48,7 +47,7 @@ public class Configer {
                         auth -> {
                             auth
                                     .requestMatchers(
-                                            "/api/product/**",
+                                            "/api/v2/shop/product/**",
                                             "/api/auth/**",
                                             "/api/image/**",
                                             "/api/otp/**",
@@ -85,7 +84,7 @@ public class Configer {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(
-                        logout -> logout.logoutUrl("/api/logout")
+                        logout -> logout.logoutUrl("/api/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
 
@@ -103,7 +102,7 @@ public class Configer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200/", "http://localhost:3000/", "http://localhost:8080/", "http://localhost:5173/",getFrontend())
+                        .allowedOrigins("http://localhost:4200/", "http://localhost:3000/", "http://localhost:8080/", "http://localhost:5173/", getFrontend())
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
