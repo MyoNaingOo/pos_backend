@@ -164,7 +164,12 @@ public class ProductSer {
         return changeListProDto(products);
 
     }
+    public PageDto findByMonthCount(int pageSize,int month,int year) {
+        int products = productRepo.findByMonthCount(month,year);
+        int page_number = products / pageSize;
+        return PageDto.builder().number(products).page_number(page_number).build();
 
+    }
 
     public PageDto products(int pageSize) {
         int products = productRepo.productsCount();

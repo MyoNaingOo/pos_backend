@@ -1,6 +1,7 @@
 package com.mno.business.product.controller;
 
 
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.dto.ProductDto;
 import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
@@ -88,6 +89,14 @@ public class ProductPanelControl {
     }
 
 
+    @GetMapping("findByMonth/page")
+    public PageDto findByMonthPage(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
+        return productSer.findByMonthCount(pageSize,month, year);
+    }
     @GetMapping("find/{value}/{num}")
     private List<ProductDto> findProduct(
             @PathVariable("value") String value,

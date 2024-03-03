@@ -16,6 +16,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     @Query(value = " SELECT * FROM product WHERE MONTH(time)=?1 AND YEAR(time)=?2", nativeQuery = true)
     List<Product> findByMonth(int month, int year, Pageable pageable);
 
+    @Query(value = "SELECT COUNT(id) FROM product WHERE MONTH(time)=?1 AND YEAR(time)=?2",nativeQuery = true)
+    int findByMonthCount(int month, int year);
 
     @Transactional
     @Modifying

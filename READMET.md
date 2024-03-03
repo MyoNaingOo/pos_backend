@@ -216,9 +216,10 @@ Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
 Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
 Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
 Get Users info : http://localhost:8080/api/v2/user/shop/page/${num} <br>
+ http://localhost:8080/api/v2/user/shop/page <br>
 
 Logout Acc : http://localhost:8080/api/auth/logout GET Method<br>
-Delete My Acc : http://localhost:8080/api/v1/user/delete <br>
+Delete My Acc : http://localhost:8080/api/v2/user/delete <br>
 
 response obj in one user information :
 
@@ -270,7 +271,7 @@ Using user obj request for this
 }
 ```
 
-Image update: http://localhost:8080/api/v1/user/image
+Image update: http://localhost:8080/api/v2/user/image
 PUT request :
 
 ```json
@@ -280,7 +281,7 @@ PUT request :
 }
 ```
 
-Name update: http://localhost:8080/api/v1/user/changeName
+Name update: http://localhost:8080/api/v2/user/changeName
 PUT request :
 
 ```json
@@ -289,7 +290,7 @@ PUT request :
 }
 ```
 
-password update: http://localhost:8080/api/v1/user/changePass
+password update: http://localhost:8080/api/v2/user/changePass
 PUT request :
 
 ```json
@@ -298,7 +299,7 @@ PUT request :
 }
 ```
 
-Address update: http://localhost:8080/api/v1/user/change/shop
+Address update: http://localhost:8080/api/v2/user/change/shop
 PUT request :
 
 ```json
@@ -308,13 +309,14 @@ PUT request :
 ```
 
 User Manger control panel
-Get User info    : http://localhost:8080/api/v2/user/user (Logined user information)
-Get User info include shop   : http://localhost:8080/api/v2/user/userInfo (Logined user information)
-Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
-Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
-Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
-Get Users info : http://localhost:8080/api/v2/user/shop/page/${num} <br>
-
+Get Users info of shop : http://localhost:8080/api/v2/panel/user/shop/page/${num} <br> 
+ http://localhost:8080/api/v2/panel/user/shop/page <br>
+Get Users info : http://localhost:8080/api/v2/panel/userpage/${num} <br>
+http://localhost:8080/api/v2/panel/user/page <br>
+change role : http://localhost:8080/api/v2/panel/user/change/role <br>
+SetCEO : http://localhost:8080/api/v2/panel/user/setCEO <br>
+Delete user : http://localhost:8080/api/v2/user/delete/{id} <br>
+get user info : http://localhost:8080/api/v2/user/userid/{id} <br>
 
 
 <h4 id="img_crud" >Image CRUD</h4>
@@ -357,7 +359,7 @@ Product price obj
 }
 ```
 
-Product add     :  http://localhost:8080/api/v1/product/add
+Product add     :  http://localhost:8080/api/v2/shop/product/add
 request obj
 
 ```json
@@ -369,7 +371,7 @@ request obj
 
 ```
 
-Price add     :  http://localhost:8080/api/v1/price/add
+Price add     :  http://localhost:8080/api/v2/price/add
 request obj
 
 ```json
@@ -381,16 +383,24 @@ request obj
 ```
 
 
-Product delete  :  http://localhost:8080/api/v1/product/delete/${id} id = product_id DELETE/Method<br>
-Price delete  :  http://localhost:8080/api/v1/price/delete/${id} id = product_id DELETE/Method<br>
+Product delete  :  http://localhost:8080/api/v2/product/delete/${id} id = product_id DELETE/Method<br>
+Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id DELETE/Method<br>
 but Product has been sale,store,price data added not available delete <br>
 
-product_details : http://localhost:8080/api/v1/product/${id} id = product_id <br>
+product_details : http://localhost:8080/api/v2/pid/${id} id = product_id <br>
 response <a href="#product_obj" >Product Obj</a> <br>
 
-products : http://localhost:8080/api/v1/product/products <br>
-products find by month : http://localhost:8080/api/v1/product/findByMonth/${num} <br>
-products with page : http://localhost:8080/api/v1/product/page/${num} <br>
+products : http://localhost:8080/api/v2/shop/product/page/{num} <br>
+products find by month : http://localhost:8080/api/v2/product/findByMonth/${num} <br>
+products with page : http://localhost:8080/api/v2/product/page/${num} <br>
+find by code : http://localhost:8080/api/v2/shop/product/find/code/{code}
+find by name and description : http://localhost:8080/api/v2/shop/product/find/{value}/{num}
+find by name and description : http://localhost:8080/api/v2/shop/product/find/{value}/page
+
+
+
+its all api response same (products.find by mont )
+http://localhost:8080/api/v2/shop/product/page
 
 response array data of product <br>
 
@@ -401,9 +411,9 @@ response array data of product <br>
   "id": "",
   "product": "",
   "user": "",
-  "bulk": "",
+  "quantity": 200,
   "time": "",
-  "update_bulk": ""
+  "update_quantity": 0
 }
 ```
 
