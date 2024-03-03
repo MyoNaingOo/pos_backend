@@ -1,6 +1,7 @@
 package com.mno.business.product.Prices;
 
 import com.mno.business.Store.Repo.StoreRepo;
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.Repo.ProductRepo;
 import com.mno.business.product.dto.ProductDto;
 import com.mno.business.product.entity.Product;
@@ -104,13 +105,25 @@ public class ProPriceSer {
         return resProPrice(proPriceRepo.findById(id).orElse(null));
     }
 
-    public List<ProPrice> findAllByProduct(Long product_id, int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<ProPrice> findAllByProduct(Long product_id, int page_num,int pageSize,boolean desc) {
+
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
         return proPriceRepo.findAllByProduct(product_id, pageable);
     }
 
-    public List<ProPrice> findAll( int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<ProPrice> findAll(int page_num,int pageSize,boolean desc) {
+
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(page_num, pageSize, Sort.by("id"));
+        }
         return proPriceRepo.findAll(pageable).getContent();
     }
 
@@ -125,4 +138,9 @@ public class ProPriceSer {
     }
 
 
+    public PageDto proPricePage(int pageSize) {
+        int number = proPriceRepo.findProPriceAllCount();
+        int page_number = number / pageSize;
+        return PageDto.builder().number(number).page_number(page_number).build();
+    }
 }

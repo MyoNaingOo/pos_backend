@@ -1,5 +1,6 @@
 package com.mno.business.product.Prices;
 
+import com.mno.business.helper.PageDto;
 import com.mno.business.product.entity.Product;
 import com.mno.business.product.service.ProductSer;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +33,39 @@ public class ProPriceControl {
     }
 
     @GetMapping("product/page/{num}")
-    private List<ProPriceDto> proPriceByProduct(@PathVariable("num") int num, @RequestParam("product_id") Long product_id) {
-        List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id, num);
+    private List<ProPriceDto> proPriceByProduct(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam("product_id") Long product_id
+    ) {
+        List<ProPrice> proPrices = proPriceSer.findAllByProduct(product_id, num,pageSize,desc);
         return proPriceSer.proPriceDtos(proPrices);
     }
 
+    @GetMapping("product/page")
+    private PageDto proPriceByProductPage(
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
+        return proPriceSer.proPricePage(pageSize);
+    }
+
     @GetMapping("page/{num}")
-    private List<ProPriceDto> proPrice(@PathVariable("num") int num) {
-        List<ProPrice> proPrices = proPriceSer.findAll(num);
+    private List<ProPriceDto> proPrice(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc
+    ) {
+        List<ProPrice> proPrices = proPriceSer.findAll(num,pageSize,desc);
         return proPriceSer.proPriceDtos(proPrices);
+    }
+
+
+    @GetMapping("page")
+    private PageDto page(
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
+        return proPriceSer.proPricePage(pageSize);
     }
 
     @DeleteMapping("delete/{id}")

@@ -33,6 +33,9 @@
         <a href="#product_obj" >Product and Price CRUD</a>
     </li>
     <li>
+        <a href="#price" >Price</a>
+    </li>
+    <li>
         <a href="#store_obj" >Store CRUD</a>
     </li>
     <li>
@@ -66,15 +69,12 @@ true is already have been. false is available
   "gmail": "***@gmail",
   "address": "**",
   "role": "ADMIN",
-  "nameNotAvailable" : true,
-  "gmailNotAvailable" : false
+  "nameNotAvailable": true,
+  "gmailNotAvailable": false
 }
 ```
 
-
-
 Reg Otp  : http://localhost:8080/api/otp/register<br>
-
 
 ```json
 {
@@ -83,11 +83,8 @@ Reg Otp  : http://localhost:8080/api/otp/register<br>
 }
 ```
 
-
-
 <h3 id="user_login">User Login and Forget Password</h3>
 Login    : http://localhost:8080/api/auth/authenticate
-
 
 ```json
 {
@@ -97,12 +94,12 @@ Login    : http://localhost:8080/api/auth/authenticate
 ```
 
 forget password: http://localhost:8080/api/auth/forGetPass
+
 ```json
 {
   "gmail": "**@gmail"
 }
 ```
-
 
 Login Otp: http://localhost:8080/api/otp/authenticate
 <br>Login request obj :
@@ -113,7 +110,6 @@ Login Otp: http://localhost:8080/api/otp/authenticate
   "otp": 123456
 }
 ```
-
 
 <h3 id="otp">Login OR Register OR ForgetPassword Otp Response</h3>
 Otp response obj
@@ -166,13 +162,14 @@ More details example in angular : https://github.com/MyoNaingOo/shopAng/blob/mas
 <br>
 
 <h3 id="shop">Shop and User Shop</h3>
-Add shop information  of user  : http://localhost:8080/api/v2/user/change/shop?new_user=true (new user true for now register user)<br>
+Add shop information of user  : http://localhost:8080/api/v2/user/change/shop?new_user=true (new user true for now
+register user)<br>
 
 ```json
 {
- "shop": {
-  "id": **
- }
+  "shop": {
+    "id": **
+  }
 }
 
 ```
@@ -184,27 +181,30 @@ get Shop  : http://localhost:8080/api/v2/shop/${id} (id = shop id )<br>
 update  : http://localhost:8080/api/v2/shop/update/${id} (id = shop id )<br>
 delete  : http://localhost:8080/api/v2/shop/delete/${id} (id = shop id )<br>
 response one shop obj:
+
 ```json
  {
   "name": "",
   "region": "",
   "town": ""
- }
+}
 ```
 
 <h3 id="custom_page">Customize pagination</h3> <br>
 pagination number start is zero (0) <br>
- http://localhost:8080/api/***/***/{num}?pageSize=${30}&desc=${true} (desc: boolean = descending {true or false}  ) <br>
+http://localhost:8080/api/***/***/{num}?pageSize=${30}&desc=${true} (desc: boolean = descending {true or false}  ) <br>
 
- http://localhost:8080/api/***/***/page <br>
+http://localhost:8080/api/***/***/page <br>
 response :
+
 ```json
 {
-  "number" : 20,  //result number
-  "page_number": 1  // pagination action number 
+  "number": 20,
+  //result number
+  "page_number": 1
+  // pagination action number 
 }
 ```
-
 
 <h3 id="other_user_api">Other Api for User</h3>
 <p style="color:#f80" >It has Logined status</p>
@@ -216,7 +216,7 @@ Get User info By id   : http://localhost:8080/api/v2/user/userid/${id} <br>
 Get User info By name   : http://localhost:8080/api/v2/user/username/${name} <br>
 Get User info By gmail   : http://localhost:8080/api/v2/user/usergmaill/${gmail} <br>
 Get Users info : http://localhost:8080/api/v2/user/shop/page/${num} <br>
- http://localhost:8080/api/v2/user/shop/page <br>
+http://localhost:8080/api/v2/user/shop/page <br>
 
 Logout Acc : http://localhost:8080/api/auth/logout GET Method<br>
 Delete My Acc : http://localhost:8080/api/v2/user/delete <br>
@@ -225,27 +225,27 @@ response obj in one user information :
 
 ```json
 {
- "id": 1,
- "name": "myo",
- "user_img": null,
- "password": null,
- "gmail": "myo@gmail",
- "shop": {
-  "name": "",
-  "region": "",
-  "town": ""
- },
- "role": "USER",
- "enabled": true,
- "username": "myo@gmail",
- "authorities": [
-  {
-   "authority": "USER"
-  }
- ],
- "accountNonExpired": true,
- "accountNonLocked": true,
- "credentialsNonExpired": true
+  "id": 1,
+  "name": "myo",
+  "user_img": null,
+  "password": null,
+  "gmail": "myo@gmail",
+  "shop": {
+    "name": "",
+    "region": "",
+    "town": ""
+  },
+  "role": "USER",
+  "enabled": true,
+  "username": "myo@gmail",
+  "authorities": [
+    {
+      "authority": "USER"
+    }
+  ],
+  "accountNonExpired": true,
+  "accountNonLocked": true,
+  "credentialsNonExpired": true
 }
 ```
 
@@ -309,15 +309,14 @@ PUT request :
 ```
 
 User Manger control panel
-Get Users info of shop : http://localhost:8080/api/v2/panel/user/shop/page/${num} <br> 
- http://localhost:8080/api/v2/panel/user/shop/page <br>
+Get Users info of shop : http://localhost:8080/api/v2/panel/user/shop/page/${num} <br>
+http://localhost:8080/api/v2/panel/user/shop/page <br>
 Get Users info : http://localhost:8080/api/v2/panel/userpage/${num} <br>
 http://localhost:8080/api/v2/panel/user/page <br>
 change role : http://localhost:8080/api/v2/panel/user/change/role <br>
 SetCEO : http://localhost:8080/api/v2/panel/user/setCEO <br>
 Delete user : http://localhost:8080/api/v2/user/delete/{id} <br>
 get user info : http://localhost:8080/api/v2/user/userid/{id} <br>
-
 
 <h4 id="img_crud" >Image CRUD</h4>
 Image Add : http://localhost:8080/api/image/add POST Method <br>
@@ -377,32 +376,72 @@ request obj
 ```json
 {
   "product_id": 1,
-  "org_price": "",
-  "promo_price": ""
+  "org_price": 130,
+  "promo_price": 120,
+  "purchase_price": 100
 }
 ```
 
-
 Product delete  :  http://localhost:8080/api/v2/product/delete/${id} id = product_id DELETE/Method<br>
-Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id DELETE/Method<br>
 but Product has been sale,store,price data added not available delete <br>
 
-product_details : http://localhost:8080/api/v2/pid/${id} id = product_id <br>
+product_details : http://localhost:8080/api/v2/pid/${id} (id = product_id )<br>
+find by code : http://localhost:8080/api/v2/shop/product/find/code/{code}
+
 response <a href="#product_obj" >Product Obj</a> <br>
 
 products : http://localhost:8080/api/v2/shop/product/page/{num} <br>
-products find by month : http://localhost:8080/api/v2/product/findByMonth/${num} <br>
-products with page : http://localhost:8080/api/v2/product/page/${num} <br>
-find by code : http://localhost:8080/api/v2/shop/product/find/code/{code}
-find by name and description : http://localhost:8080/api/v2/shop/product/find/{value}/{num}
-find by name and description : http://localhost:8080/api/v2/shop/product/find/{value}/page
-
-
-
-its all api response same (products.find by mont )
 http://localhost:8080/api/v2/shop/product/page
 
-response array data of product <br>
+find by name and description : http://localhost:8080/api/v2/shop/product/find/{value}/{num}
+http://localhost:8080/api/v2/shop/product/find/{value}/page
+
+Sale Manager , Store Manager ,CEO,OWNER
+
+product_details : http://localhost:8080/api/v2/panel/product/pid/${id} (id = product_id )<br>
+
+products : http://localhost:8080/api/v2/panel/product/page/{num} <br>
+http://localhost:8080/api/v2/panel/product/page
+
+find by name and description : http://localhost:8080/api/v2/panel/product/find/{value}/{num}
+http://localhost:8080/api/v2/panel/product/find/{value}/page
+
+products find by month : http://localhost:8080/api/v2/panel/product/findByMonth/${num} <br>
+http://localhost:8080/api/v2/panel/product/findByMonth/page <br>
+
+find by name and description : http://localhost:8080/api/v2/panel/product/find/{value}/{num}
+http://localhost:8080/api/v2/shop/product/find/{value}/page
+
+shop filter
+product_details : http://localhost:8080/api/v2/panel/product/shop/pid/${id} (id = product_id )<br>
+
+products : http://localhost:8080/api/v2/panel/product/shop/page/{num} <br>
+http://localhost:8080/api/v2/panel/product/shop/page
+
+find by name and description : http://localhost:8080/api/v2/panel/product/shop/find/{value}/{num}
+http://localhost:8080/api/v2/panel/product/shop/find/{value}/page
+
+find by name and description : http://localhost:8080/api/v2/panel/product/shop/find/{value}/{num}
+http://localhost:8080/api/v2/shop/product/shop/find/{value}/page
+
+<h3 id="price">Price</h3>
+Price add     :  http://localhost:8080/api/v2/price/add
+request obj
+
+```json
+{
+  "product_id": 1,
+  "org_price": 130,
+  "promo_price": 120,
+  "purchase_price": 100
+}
+```
+
+Prices     :  http://localhost:8080/api/v2/price/page/{num}
+http://localhost:8080/api/v2/price/page
+Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id DELETE/Method<br>
+
+
 
 <h4 id="store_obj" >Store obj:</h4>
 
@@ -423,7 +462,7 @@ request obj:
 ```json
 {
   "product_id": 1,
-  "bulk": 300
+  "quantity": 300
 }
 ```
 
@@ -494,8 +533,6 @@ Sale with page : http://localhost:8080/api/v1/sale/page/${num} <br>
 Sale findByMonth : http://localhost:8080/api/v1/sale/findByMonth/${num}?month=${month_num}&&year=${year_num} <br>
 Sale delete : http://localhost:8080/api/v1/sale/delete/${num} <br>
 
-
-
 <h4 id="docker" >Docker image</h4>
 
 step 1
@@ -505,21 +542,27 @@ check tag version <a href="https://hub.docker.com/r/myonaingoo/posbackend/tags" 
 ```text
     docker pull myonaingoo/posbackend:1.7
 ``` 
+
 step 2<br>
 mysql image need to store
+
 ```text
     docker pull mysql
 ```
+
 some config doing start<br>
 step 3<br>
 start run mysql server <br>
+
 ```text
     docker network create posnet
     docker run --name mysql_container --network posnet -p 3307:3306 -e MYSQL_ROOT_PASSWORD=yourpassword -d mysql 
 ```
+
 step 4<br>
 create database<br>
 note create database name is business
+
 ```
     docker exec -it mysql_container bash 
     mysql -u root -p
@@ -529,6 +572,7 @@ note create database name is business
     exit
     
 ```
+
 step 5 <br>
 run backend image<br>
 MYSQL_USER for mysql user name<br>
@@ -541,6 +585,7 @@ GMAIL is important.Because it gmail only can do admin role.<br>
 ```text
     docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com -d posbackend:1.7
 ```
+
 default <br>
 MYSQL_USER=root <br>
 MYSQL_PASSWORD=Mno2003 <br>

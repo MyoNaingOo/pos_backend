@@ -16,9 +16,14 @@ public interface ProPriceRepo extends JpaRepository<ProPrice,Long> {
     @Query(value = "SELECT * FROM pro_price WHERE product_id=?1 AND date=(SELECT MAX(date) FROM pro_price WHERE product_id=?1) ORDER BY id DESC LIMIT 1 ",nativeQuery = true)
     Optional<ProPrice> findLtsProPrice(Long product_id);
 
+    @Query(value = "SELECT COUNT(id) FROM pro_price",nativeQuery = true)
+    int findProPriceAllCount();
 
     @Query(value = "SELECT * FROM pro_price WHERE product_id= ?1",nativeQuery = true)
     List<ProPrice> findAllByProduct(Long product_id, Pageable pageable);
+
+    @Query(value = "SELECT COUNT(id) FROM pro_price WHERE product_id=?1  ",nativeQuery = true)
+    int findProPriceCountByProduct(Long product_id);
 
 
 }
