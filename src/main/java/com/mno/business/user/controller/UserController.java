@@ -34,16 +34,22 @@ public class UserController {
     }
 
     @GetMapping("shop/page/{num}")
-    public List<UserInfo> getUsernameOfShop(@PathVariable("num") int num, HttpServletRequest request) {
+    public List<UserInfo> getUsernameOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            HttpServletRequest request
+    ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        List<UserInfo> userInfos = userService.getusersInfoByShop(num, userInfo.getShop());
+        List<UserInfo> userInfos = userService.getusersInfoByShop(num, userInfo.getShop(), pageSize, desc);
         return userService.userInfosMapper(userInfos);
     }
 
     @GetMapping("shop/page")
-    private PageDto pageOfShop(HttpServletRequest request){
+    private PageDto pageOfShop(@RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+                               HttpServletRequest request) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return userService.usersOfShop(userInfo.getShop());
+        return userService.usersOfShop(userInfo.getShop(), pageSize);
     }
 
     @GetMapping("username/{name}")
@@ -90,7 +96,7 @@ public class UserController {
     }
 
     @PutMapping("change/shop")
-    public void changeShop(@RequestBody UserDto userDto, @RequestParam(value = "new_user",required = false,defaultValue = "false") boolean new_user, HttpServletRequest request) {
+    public void changeShop(@RequestBody UserDto userDto, @RequestParam(value = "new_user", required = false, defaultValue = "false") boolean new_user, HttpServletRequest request) {
 
         if (!new_user) {
             UserInfo userInfo = jwtService.getUserInfo(request);
@@ -101,8 +107,6 @@ public class UserController {
 
         }
     }
-
-
 
 
 }

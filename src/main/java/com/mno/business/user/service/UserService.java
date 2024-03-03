@@ -112,9 +112,16 @@ public class UserService {
         return userRepo.findByGmail(gmail).orElse(null);
     }
 
-    public List<User> getUsers(int num) {
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<User> getUsers(int num,int pageSize,boolean desc) {
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
         return userRepo.findAll(pageable).getContent();
+
+
     }
 
     public Optional<User> getUser(Long id) {
@@ -126,8 +133,15 @@ public class UserService {
     }
 
 
-    public List<UserInfo> getusersInfoByShop(int num,Shop shop){
-        Pageable pageable = PageRequest.of(num, 20, Sort.by("id").descending());
+    public List<UserInfo> getusersInfoByShop(int num,Shop shop,int pageSize,boolean desc){
+
+        PageRequest pageable;
+        if (desc) {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+        } else {
+            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+        }
+
         return userInfoRepo.findAllByShop(shop,pageable);
 
     }
@@ -190,9 +204,9 @@ public class UserService {
         return PageDto.builder().page_number(page_number).number(users).build();
     }
 
-    public PageDto usersOfShop(Shop shop){
+    public PageDto usersOfShop(Shop shop,int pageSize){
         int users = userInfoRepo.getUserCountOfShop(shop.getId());
-        int page_number = users / 20;
+        int page_number = users / pageSize;
         return PageDto.builder().page_number(page_number).number(users).build();
     }
 

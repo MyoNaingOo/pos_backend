@@ -32,8 +32,12 @@ public class UserPanelControl {
     }
 
     @GetMapping("page/{num}")
-    public List<UserDto> getusers(@PathVariable("num") int num) {
-        List<User> users = userService.getUsers(num);
+    public List<UserDto> getusers(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc
+    ) {
+        List<User> users = userService.getUsers(num, pageSize, desc);
         return userService.ListMapper(users);
     }
 
@@ -44,16 +48,23 @@ public class UserPanelControl {
 
 
     @GetMapping("shop/page/{num}")
-    public List<UserInfo> getUsernameOfShop(@PathVariable("num") int num, @RequestParam("shop_id") Long shop_id) {
+    public List<UserInfo> getUsernameOfShop(
+            @PathVariable("num") int num,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam("shop_id") Long shop_id) {
         Shop shop = shopSer.shop(shop_id);
-        List<UserInfo> userInfos = userService.getusersInfoByShop(num, shop);
+        List<UserInfo> userInfos = userService.getusersInfoByShop(num, shop,pageSize,desc);
         return userService.userInfosMapper(userInfos);
     }
 
     @GetMapping("shop/page")
-    private PageDto pageOfShop(@RequestParam("shop_id") Long shop_id) {
+    private PageDto pageOfShop(
+            @RequestParam("shop_id") Long shop_id,
+            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize
+    ) {
         Shop shop = shopSer.shop(shop_id);
-        return userService.usersOfShop(shop);
+        return userService.usersOfShop(shop,pageSize);
     }
 
 
