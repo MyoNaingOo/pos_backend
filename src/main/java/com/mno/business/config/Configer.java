@@ -1,9 +1,7 @@
 package com.mno.business.config;
 
 import com.mno.business.user.entity.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +19,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @Data
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class Configer {
 
