@@ -168,7 +168,7 @@ register user)<br>
 ```json
 {
   "shop": {
-    "id": **
+    "id": 1
   }
 }
 
@@ -299,7 +299,7 @@ PUT request :
 }
 ```
 
-Address update: http://localhost:8080/api/v2/user/change/shop
+Shop update: http://localhost:8080/api/v2/user/change/shop?new_user=false
 PUT request :
 
 ```json
@@ -439,9 +439,11 @@ request obj
 
 Prices     :  http://localhost:8080/api/v2/price/page/{num}
 http://localhost:8080/api/v2/price/page
+
+Prices filter by product :  http://localhost:8080/api/v2/price/product/page/{num}
+http://localhost:8080/api/v2/price/product/page
+
 Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id DELETE/Method<br>
-
-
 
 <h4 id="store_obj" >Store obj:</h4>
 
@@ -456,7 +458,7 @@ Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id
 }
 ```
 
-Store add : http://localhost:8080/api/v1/store/add <br>
+Store add : http://localhost:8080/api/v2/shop/store/add <br>
 request obj:
 
 ```json
