@@ -163,7 +163,7 @@ More details example in angular : https://github.com/MyoNaingOo/shopAng/blob/mas
 
 <h3 id="shop">Shop and User Shop</h3>
 Add shop information of user  : http://localhost:8080/api/v2/user/change/shop?new_user=true (new user true for now
-register user)<br>
+registering user)<br>
 
 ```json
 {
@@ -299,14 +299,18 @@ PUT request :
 }
 ```
 
-Shop update: http://localhost:8080/api/v2/user/change/shop?new_user=false
-PUT request :
+Shop update:   : http://localhost:8080/api/v2/user/change/shop?new_user=false  (registered user) <br>
 
 ```json
 {
-  "address": "***"
+  "shop": {
+    "id": 1
+  }
 }
+
 ```
+
+
 
 User Manger control panel
 Get Users info of shop : http://localhost:8080/api/v2/panel/user/shop/page/${num} <br>
@@ -406,14 +410,14 @@ http://localhost:8080/api/v2/panel/product/page
 find by name and description : http://localhost:8080/api/v2/panel/product/find/{value}/{num}
 http://localhost:8080/api/v2/panel/product/find/{value}/page
 
-products find by month : http://localhost:8080/api/v2/panel/product/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
+products find by
+month : http://localhost:8080/api/v2/panel/product/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
 http://localhost:8080/api/v2/panel/product/findByMonth/page?month=${month_num}&year=${year_num} <br>
 
 find by name and description : http://localhost:8080/api/v2/panel/product/find/{value}/{num}
 http://localhost:8080/api/v2/shop/product/find/{value}/page
 
 find by code : http://localhost:8080/api/v2/panel/product/find/code/{code}
-
 
 shop filter
 product_details : http://localhost:8080/api/v2/panel/product/shop/pid/${id}?shop_id={id} (id = product_id )<br>
@@ -426,7 +430,8 @@ http://localhost:8080/api/v2/panel/product/shop/find/{value}/page?shop_id={id}
 
 find by code : http://localhost:8080/api/v2/panel/product/shop/find/code/{code}
 
-products find by month : http://localhost:8080/api/v2/panel/product/shop/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
+products find by
+month : http://localhost:8080/api/v2/panel/product/shop/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
 http://localhost:8080/api/v2/panel/product/shop/findByMonth/page?month=${month_num}&year=${year_num} <br>
 
 <h3 id="price">Price</h3>
@@ -456,10 +461,10 @@ Price delete  :  http://localhost:8080/api/v2/price/delete/${id} id = product_id
 {
   "id": "",
   "product": {
-   ...
+    ...
   },
   "user": {
-   ...
+    ...
   },
   "quantity": 200,
   "time": "",
@@ -477,7 +482,6 @@ request obj:
 }
 ```
 
-
 Store Worker,Store Manager
 Stores : http://localhost:8080/api/v2/shop/store/page/${num} <br>
 http://localhost:8080/api/v2/shop/store/page <br>
@@ -488,13 +492,13 @@ http://localhost:8080/api/v2/shop/store/sold/page <br>
 
 Stores findAll By
 Monthly : http://localhost:8080/api/v2/shop/store/findAllByMonth/${num}?month=${month_num}&year=${year_num} <br>
- http://localhost:8080/api/v2/shop/store/findAllByMonth/page?month=${month_num}&year=${year_num} <br>
+http://localhost:8080/api/v2/shop/store/findAllByMonth/page?month=${month_num}&year=${year_num} <br>
 
 findAll Stores By Product : http://localhost:8080/api/v2/shop/store/findAllByProduct/${num} <br>
- http://localhost:8080/api/v2/shop/store/findAllByProduct/page <br>
+http://localhost:8080/api/v2/shop/store/findAllByProduct/page <br>
 
 Stores By User : http://localhost:8080/api/v2/shop/store/findAllByUser/${num} <br>
- http://localhost:8080/api/v2/shop/store/findAllByUser/page <br>
+http://localhost:8080/api/v2/shop/store/findAllByUser/page <br>
 
 Store delete : http://localhost:8080/api/v2/shop/store/delete/${id} id=product_id <br>
 
@@ -572,6 +576,10 @@ Sale obj
 ```
 
 Sale add : http://localhost:8080/api/v2/shop/sale/add <br>
+default(?perishable=false)
+
+you can available, perishable products add : http://localhost:8080/api/v2/shop/sale/add?perishable=true <br>
+
 request obj:
 
 ```json
@@ -589,9 +597,10 @@ request obj:
 }
 
 ```
+
 Sale worker,Sale Manager
 Sale with page : http://localhost:8080/api/v2/shop/sale/page/${num} <br>
- http://localhost:8080/api/v2/shop/sale/page <br>
+http://localhost:8080/api/v2/shop/sale/page <br>
 Sale findByMonth : http://localhost:8080/api/v2/shop/sale/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
 Sale findByMonth : http://localhost:8080/api/v2/shop/sale/findByMonth/page?month=${month_num}&year=${year_num} <br>
 Sale delete : http://localhost:8080/api/v1/sale/delete/${id} <br>
@@ -602,15 +611,16 @@ http://localhost:8080/api/v2/panel/sale/page <br>
 Sale findByMonth : http://localhost:8080/api/v2/panel/sale/findByMonth/${num}?month=${month_num}&year=${year_num} <br>
 Sale findByMonth : http://localhost:8080/api/v2/panel/sale/findByMonth/page?month=${month_num}&year=${year_num} <br>
 
-shop filter 
+shop filter
 Sale with page : http://localhost:8080/api/v2/panel/sale/shop/page/${num}?shop_id={id} <br>
 http://localhost:8080/api/v2/panel/sale/shop/page?shop_id={id} <br>
-Sale findByMonth : http://localhost:8080/api/v2/panel/sale/shop/findByMonth/${num}?month=${month_num}&year=${year_num}&shop_id={id} <br>
-Sale findByMonth : http://localhost:8080/api/v2/panel/sale/shop/findByMonth/page?month=${month_num}&year=${year_num}?shop_id={id} <br>
+Sale
+findByMonth : http://localhost:8080/api/v2/panel/sale/shop/findByMonth/${num}?month=${month_num}&year=${year_num}&shop_id={id} <br>
+Sale
+findByMonth : http://localhost:8080/api/v2/panel/sale/shop/findByMonth/page?month=${month_num}&year=${year_num}?shop_id={id} <br>
 
-
-
-
+sale product all get APIs perishable defaultValue value is all (?perishable=all)
+other value{?perishable=true / ?perishable=false}
 
 <h4 id="docker" >Docker image</h4>
 
