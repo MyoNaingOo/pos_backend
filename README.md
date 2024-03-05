@@ -310,8 +310,6 @@ Shop update:   : http://localhost:8080/api/v2/user/change/shop?new_user=false  (
 
 ```
 
-
-
 User Manger control panel
 Get Users info of shop : http://localhost:8080/api/v2/panel/user/shop/page/${num} <br>
 http://localhost:8080/api/v2/panel/user/shop/page <br>
@@ -673,6 +671,18 @@ GMAIL is important.Because it gmail only can do admin role.<br>
 
 ```text
     docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com -d posbackend:1.7
+```
+
+default allowed URLs{
+"http://localhost:4200/",
+"http://localhost:3000/",
+"http://localhost:8080/",
+"http://localhost:5173/"
+}
+
+you can do. your custom port and host allowed (FE=http://localhost:1234/)
+```text
+    docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com  FE=http://localhost:1234/ -d posbackend:1.7
 ```
 
 default <br>
