@@ -41,6 +41,9 @@
     <li>
         <a href="#sale_obj" >Sale CRUD</a>
     </li>
+    <li>
+        <a href="#img" >APIs images</a>
+    </li>
 </ul>
 
 
@@ -703,7 +706,7 @@ GMAIL=myonaingoo623@gmail.com
 
 ```
 
-<h3> URLs</h3>
+<h3 id="img" >APIs images</h3>
 <img src="./images/pos1.jpg" width="100%" height="auto">
 <img src="./images/pos2.jpg" width="100%" height="auto">
 <img src="./images/pos3.jpg" width="100%" height="auto">
@@ -717,7 +720,7 @@ you can download pdf file it images.
 <a href="./images/pos.pdf" >Download</a>
 <br>
 <hr>
-<p style="text-align:center">2024 &copy; </p>
+<p style="text-align:center;">2024 &copy; </p>
 
 
 
