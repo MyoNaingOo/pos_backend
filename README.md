@@ -627,7 +627,7 @@ step 1
 check tag version <a href="https://hub.docker.com/r/myonaingoo/posbackend/tags" >More details</a>
 
 ```text
-    docker pull myonaingoo/posbackend:1.7
+    docker pull myonaingoo/posbackend:2
 ``` 
 
 step 2<br>
@@ -670,7 +670,7 @@ MYSQL_PORT for mysql port //note it running port 3306   <br>
 GMAIL is important.Because it gmail only can do admin role.<br>
 
 ```text
-    docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com -d posbackend:1.7
+    docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com -d posbackend:2
 ```
 
 default allowed URLs{
@@ -703,9 +703,21 @@ GMAIL=myonaingoo623@gmail.com
 
 ```
 
-
-
-
+<h3> URLs</h3>
+<img src="./images/pos1.jpg" width="100%" height="auto">
+<img src="./images/pos2.jpg" width="100%" height="auto">
+<img src="./images/pos3.jpg" width="100%" height="auto">
+<img src="./images/pos4.jpg" width="100%" height="auto">
+<img src="./images/pos5.jpg" width="100%" height="auto">
+<img src="./images/pos6.jpg" width="100%" height="auto">
+<img src="./images/pos7.jpg" width="100%" height="auto">
+<img src="./images/pos8.jpg" width="100%" height="auto">
+<img src="./images/pos9.jpg" width="100%" height="auto">
+you can download pdf file it images.
+<a href="./images/pos.pdf" >Download</a>
+<br>
+<hr>
+<p style="text-align:center">2024 &copy; </p>
 
 
 
