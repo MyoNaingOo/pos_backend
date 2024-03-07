@@ -50,7 +50,7 @@
 <h3 id="user_reg">User Register</h3>
 
 Register :  http://localhost:8080/api/auth/register <br>
-you can get admin role <a href="#admin_role"> click here</a><br>
+you can get Owner role <a href="#owner_role"> click here</a><br>
 Register request obj :
 
 ```json
@@ -71,7 +71,7 @@ true is already have been. false is available
   "user_img": null,
   "gmail": "***@gmail",
   "address": "**",
-  "role": "ADMIN",
+  "role": "USER",
   "nameNotAvailable": true,
   "gmailNotAvailable": false
 }
@@ -133,13 +133,13 @@ Otp response obj
     "shop": {
       ...
     },
-    "role": "ADMIN",
+    "role": "USER",
     "enabled": true,
     "accountNonLocked": true,
     "username": "**@gmail",
     "authorities": [
       {
-        "authority": "ADMIN"
+        "authority": "USER"
       }
     ],
     "accountNonExpired": true,
@@ -681,8 +681,8 @@ MYSQL_USER for mysql user name<br>
 MYSQL_PASSWORD for mysql user password<br>
 MYSQL_HOST for mysql container name<br>
 MYSQL_PORT for mysql port //note it running port 3306   <br>
-<h5 id="admin_role">Admin gmail setup</h5><br>
-GMAIL is important.Because it gmail only can do admin role.<br>
+<h5 id="owner_role">Owner gmail setup</h5><br>
+GMAIL is important.Because it gmail only can do Owner role.<br>
 
 ```text
     docker run -p 8080:8080 --name pos --net posnet -e MYSQL_PASSWORD=yourpassword -e MYSQL_HOST=mysql_container -e MYSQL_USER=root -e MYSQL_PORT=3306 -e GMAIL=sapaloo552@gmail.com -d posbackend:2
