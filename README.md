@@ -319,6 +319,18 @@ http://localhost:8080/api/v2/panel/user/shop/page <br>
 Get Users info : http://localhost:8080/api/v2/panel/userpage/${num} <br>
 http://localhost:8080/api/v2/panel/user/page <br>
 change role : http://localhost:8080/api/v2/panel/user/change/role <br>
+ROLE:
+
+    SALEWORKER,
+    SALEMANAGER,
+    STOREWORKER,
+    STOREMANAGER,
+    USERMANAGER,
+    USER
+
+CEO,OWNER can not change
+set ceo role change for only owner
+
 SetCEO : http://localhost:8080/api/v2/panel/user/setCEO <br>
 Delete user : http://localhost:8080/api/v2/user/delete/{id} <br>
 get user info : http://localhost:8080/api/v2/user/userid/{id} <br>
