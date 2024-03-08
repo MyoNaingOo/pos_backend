@@ -582,6 +582,7 @@ Sale obj
       "quantity": 200
     }
   ],
+  "perishable":false,
   "time": ""
 }
 
@@ -606,7 +607,9 @@ request obj:
       "product_id": 2,
       "bulk": 200
     }
-  ]
+  ],
+  "perishable": false //default false for sale products
+  // true for perishable products
 }
 
 ```
