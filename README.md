@@ -721,6 +721,11 @@ GMAIL=myonaingoo623@gmail.com
 
 ```
 
+
+Role access
+<img src="./images/posrole.jpg" width="100%" height="auto">
+
+
 <h3 id="img" >APIs images</h3>
 <img src="./images/pos1.jpg" width="100%" height="auto">
 <img src="./images/pos2.jpg" width="100%" height="auto">
