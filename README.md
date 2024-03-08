@@ -46,6 +46,7 @@
     </li>
 </ul>
 
+<img src="./images/posg.gif" height="auto" width="100%" >
 
 <h3 id="user_reg">User Register</h3>
 
