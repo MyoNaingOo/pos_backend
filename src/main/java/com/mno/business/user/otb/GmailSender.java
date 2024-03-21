@@ -14,7 +14,7 @@ public class GmailSender {
     public void sendmail(String toEmail,String subject,String body){
 
         SimpleMailMessage massage = new SimpleMailMessage();
-        massage.setFrom("myonaingoo623gmial.com");
+        massage.setFrom("myonaingoo623gmail.com");
         massage.setTo(toEmail);
         massage.setText(body);
         massage.setSubject(subject);
