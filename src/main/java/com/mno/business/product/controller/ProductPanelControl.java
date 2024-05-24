@@ -29,10 +29,11 @@ public class ProductPanelControl {
             @PathVariable("num") int num,
             @RequestParam("shop_id") Long shop_id,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "category") String category,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc
     ) {
         Shop shop = shopSer.shop(shop_id);
-        return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc), shop);
+        return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc,category), shop);
     }
 
     @GetMapping("shop/pid/{id}")
@@ -110,10 +111,11 @@ public class ProductPanelControl {
     private List<ProductDto> products(
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
+            @RequestParam(value = "category") String category,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc
 
     ) {
-        return productSer.changeListProDto(productSer.findAll(num, pageSize, desc));
+        return productSer.changeListProDto(productSer.findAll(num, pageSize, desc,category));
     }
 
 }

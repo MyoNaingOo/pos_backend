@@ -30,7 +30,7 @@ public class Product {
     private User user;
 
     private String code;
-
+    private String category;
     private String description;
     private LocalDateTime time;
 

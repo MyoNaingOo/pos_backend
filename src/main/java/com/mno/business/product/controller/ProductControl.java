@@ -31,6 +31,7 @@ public class ProductControl {
                 .name(productDto.getName())
                 .img(productDto.getImg())
                 .code(productDto.getCode())
+                .category(productDto.getCategory())
                 .description(productDto.getDescription())
                 .user(user)
                 .time(LocalDateTime.now())
@@ -44,10 +45,11 @@ public class ProductControl {
             @PathVariable("num") int num,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
             @RequestParam(value = "desc", defaultValue = "true") boolean desc,
+            @RequestParam(value = "category") String category,
             HttpServletRequest request
     ) {
         UserInfo userInfo = jwtService.getUserInfo(request);
-        return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc), userInfo.getShop());
+        return productSer.changeListProDtoOfShop(productSer.findAll(num, pageSize, desc,category), userInfo.getShop());
     }
 
     @GetMapping("pid/{id}")
@@ -97,5 +99,6 @@ public class ProductControl {
     ) {
         return productSer.products(pageSize);
     }
+
 
 }

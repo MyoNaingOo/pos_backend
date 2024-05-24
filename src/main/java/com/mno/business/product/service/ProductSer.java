@@ -41,6 +41,7 @@ public class ProductSer {
                 .img(product.getImg())
                 .code(product.getCode())
                 .name(product.getName())
+                .category(product.getCategory())
                 .user(userService.responeUser(product.getUser()))
                 .description(product.getDescription())
                 .balance(balance)
@@ -58,6 +59,7 @@ public class ProductSer {
                 .code(product.getCode())
                 .name(product.getName())
                 .user(userService.responeUser(product.getUser()))
+                .category(product.getCategory())
                 .description(product.getDescription())
                 .balance(balance)
                 .price(price)
@@ -106,14 +108,27 @@ public class ProductSer {
      * */
 
 
-    public List<Product> findAll(int num, int pageSize, boolean desc) {
+    public List<Product> findAll(int num, int pageSize, boolean desc,String category) {
         PageRequest pageable;
-        if (desc) {
-            pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
-        } else {
-            pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+
+        if (category == null || category.isEmpty()){
+
+            if (desc) {
+                pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+            } else {
+                pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+            }
+            return productRepo.findAll(pageable).getContent();
+
+
+        }else {
+            if (desc) {
+                pageable = PageRequest.of(num, pageSize, Sort.by("id").descending());
+            } else {
+                pageable = PageRequest.of(num, pageSize, Sort.by("id"));
+            }
+            return productRepo.findAllByCategory(category,pageable);
         }
-        return productRepo.findAll(pageable).getContent();
     }
 
 
@@ -142,14 +157,13 @@ public class ProductSer {
         } else {
             pageable = PageRequest.of(num, 20, Sort.by("id"));
         }
-        return productRepo.findByNameContainingAndDescriptionContaining(find, find, pageable);
+        return productRepo.findByNameContainingOrDescriptionContainingOrCategoryContaining(find, find, find, pageable);
     }
 
-    public PageDto findProductPage(String find,int pageSize) {
+    public PageDto findProductPage(String find, int pageSize) {
         int number = productRepo.pageOfNameContainingAndDescriptionContaining(find, find);
         int page_number = number / pageSize;
         return PageDto.builder().number(number).page_number(page_number).build();
-
 
     }
 
@@ -164,8 +178,8 @@ public class ProductSer {
         return changeListProDto(products);
 
     }
-    public PageDto findByMonthCount(int pageSize,int month,int year) {
-        int products = productRepo.findByMonthCount(month,year);
+    public PageDto findByMonthCount(int pageSize, int month, int year) {
+        int products = productRepo.findByMonthCount(month, year);
         int page_number = products / pageSize;
         return PageDto.builder().number(products).page_number(page_number).build();
 
@@ -177,4 +191,6 @@ public class ProductSer {
         return PageDto.builder().number(products).page_number(page_number).build();
 
     }
+
+
 }

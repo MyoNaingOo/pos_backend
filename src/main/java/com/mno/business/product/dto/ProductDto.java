@@ -24,6 +24,7 @@ public class ProductDto {
     private String code;
     private String description;
     private int balance;
+    private String category;
     private ProPrice price;
     private LocalDateTime time;
 

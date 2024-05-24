@@ -26,12 +26,16 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Optional<Product> findByCode(String code);
 
+    List<Product> findAllByCategory(String category,Pageable pageable);
 
-    List<Product> findByNameContainingAndDescriptionContaining(String name, String description, Pageable pageable);
+    List<Product> findByNameContainingOrDescriptionContainingOrCategoryContaining(String name, String description,String category, Pageable pageable);
 
 
     @Query(value = "SELECT COUNT(id) FROM product",nativeQuery = true)
     int productsCount();
+
+    @Query(value = "SELECT COUNT(id) FROM product WHERE category= ?1", nativeQuery = true)
+    List<Product> findCountByCategory(String category, Pageable pageable);
 
 
     @Query(value = "select COUNT(id) from product p where p.name like concat('%', ?1, '%') and p.description like concat('%', ?2, '%')",nativeQuery = true)
